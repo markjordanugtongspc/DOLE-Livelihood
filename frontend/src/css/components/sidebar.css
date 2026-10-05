@@ -1,0 +1,9 @@
+/* START: SidebarStyles — styles for dashboard collapsible sidebar */
+.sidebar-transition {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-transition {
+  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* END: SidebarStyles */

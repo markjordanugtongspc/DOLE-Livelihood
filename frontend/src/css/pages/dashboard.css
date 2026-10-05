@@ -1,0 +1,7 @@
+/* START: DashboardPageStyles — specific layout styling for dashboard */
+.dashboard-layout {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+/* END: DashboardPageStyles */

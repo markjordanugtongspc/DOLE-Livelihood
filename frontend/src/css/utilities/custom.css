@@ -1,0 +1,35 @@
+/* START: CustomUtilities — Tailwind-supported custom utilities */
+@utility pin-dot {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  display: inline-block;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility card-elevated {
+  background-color: #ffffff;
+  border: 1px solid var(--color-ink-200);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 25px -5px rgba(31, 42, 34, 0.08), 0 8px 10px -6px rgba(31, 42, 34, 0.04);
+}
+
+/* START: BaseCursorRule — ensure interactive elements default to cursor-pointer */
+@layer base {
+  button:not(:disabled),
+  a[href],
+  [role="button"],
+  [role="tab"],
+  label[for],
+  select,
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+/* END: BaseCursorRule */
+/* END: CustomUtilities */

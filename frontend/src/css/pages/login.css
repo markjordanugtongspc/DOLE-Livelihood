@@ -1,0 +1,13 @@
+/* START: LoginPageStyles — specific layout enhancements for login */
+.login-split-grid {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .login-split-grid {
+    grid-template-columns: 7fr 5fr;
+  }
+}
+/* END: LoginPageStyles */

@@ -1,11 +1,12 @@
 <?php
-/* START: ApiFrontController — handles all incoming /api/* requests */
-header('Content-Type: application/json; charset=UTF-8');
+/* START: ApiFrontController — entry dispatcher for all /api/* requests */
 
-echo json_encode([
-    'success' => true,
-    'message' => 'Livelihood API Router ready',
-    'data' => null,
-    'errors' => null
-]);
+require_once dirname(__DIR__) . '/bootstrap.php';
+require_once dirname(__DIR__) . '/routes/api.php';
+
+use App\core\Request;
+use App\core\Router;
+
+Router::dispatch(Request::method(), Request::uri());
+
 /* END: ApiFrontController */

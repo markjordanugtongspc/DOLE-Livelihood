@@ -1,0 +1,30 @@
+# Disable directory browsing
+Options -Indexes
+
+# Follow symbolic links
+Options +FollowSymLinks
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Block access to hidden files and directories (starting with a dot)
+    RewriteRule (^|/)\.(?!well-known/) - [F]
+
+    # Block direct access to sensitive directories
+    RewriteRule ^(config|backend|database|storage|tests|scripts) - [F,L]
+
+    # Allow direct access to existing files and directories in public/dist
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Route /api/* to backend API front controller
+    RewriteRule ^api(/.*)?$ backend/api/index.php [QSA,L]
+
+    # Route /dashboard/ to dashboard page
+    RewriteRule ^dashboard/?$ pages/dashboard/index.php [QSA,L]
+
+    # Default fallback to index.php
+    RewriteRule ^$ index.php [L]
+</IfModule>

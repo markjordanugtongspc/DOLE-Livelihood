@@ -1,0 +1,24 @@
+# Environment variables
+/config/.env
+
+# Database migrations & seeds (per user specification)
+/database/
+
+# Runtime logs
+/storage/logs/*
+!/storage/logs/.gitkeep
+
+# Dependencies
+/node_modules/
+/vendor/
+
+# Vite build assets (rebuilt via npm run build)
+/dist/
+
+# Logs and databases
+*.log
+*.sql
+
+# System files
+.DS_Store
+Thumbs.db

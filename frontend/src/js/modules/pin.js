@@ -61,7 +61,7 @@ export class PinInput {
       const slot = document.createElement('div');
       slot.id = `pin-dot-slot-${i}`;
       slot.setAttribute('data-slot-index', i.toString());
-      slot.className = 'w-11 h-12 sm:w-12 sm:h-14 flex items-center justify-center rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-lg font-bold text-slate-800 dark:text-white transition-all duration-200 shadow-xs';
+      slot.className = 'flex-1 h-12 sm:h-13 flex items-center justify-center rounded-xl border border-slate-300 bg-slate-50 text-lg font-bold text-slate-900 transition-all duration-200 shadow-xs';
       slot.setAttribute('aria-label', `Digit slot ${i + 1}`);
       this.dotsContainer.appendChild(slot);
     }
@@ -79,17 +79,17 @@ export class PinInput {
 
     slots.forEach((slot, index) => {
       if (index < this.pin.length) {
-        slot.classList.remove('border-slate-200', 'dark:border-slate-700');
-        slot.classList.add('border-emerald-600', 'bg-emerald-50/50', 'dark:bg-emerald-950/30', 'scale-105');
+        slot.classList.remove('border-slate-300', 'bg-slate-50');
+        slot.classList.add('border-emerald-600', 'bg-emerald-50/60', 'scale-105');
 
         if (this.isVisible) {
           slot.textContent = this.pin[index];
         } else {
-          slot.innerHTML = '<span class="inline-block w-3.5 h-3.5 rounded-full bg-emerald-600 shadow-xs"></span>';
+          slot.innerHTML = '<span class="inline-block w-3.5 h-3.5 rounded-full bg-emerald-700 shadow-xs"></span>';
         }
       } else {
-        slot.classList.remove('border-emerald-600', 'bg-emerald-50/50', 'dark:bg-emerald-950/30', 'scale-105');
-        slot.classList.add('border-slate-200', 'dark:border-slate-700');
+        slot.classList.remove('border-emerald-600', 'bg-emerald-50/60', 'scale-105');
+        slot.classList.add('border-slate-300', 'bg-slate-50');
         slot.textContent = '';
       }
     });

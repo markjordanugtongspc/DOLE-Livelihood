@@ -1,77 +1,61 @@
-/* START: ThemeTokens — global design system variables and color scales */
+/**
+ * START OF FILE: frontend/src/css/base/theme.css
+ * Purpose: Global design tokens, color scales, and typography configuration
+ */
 @theme {
-  --font-sans: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Custom large-screen breakpoints */
   --breakpoint-3xl: 120rem;
   --breakpoint-4xl: 160rem;
 
-  /* Primary Brand Scale (Supportive Green derived from DILP logo hand) */
-  --color-primary-50: #EEF8EE;
-  --color-primary-100: #D5EFD6;
-  --color-primary-200: #ABDFAE;
-  --color-primary-300: #7CCB81;
-  --color-primary-400: #4FB356;
-  --color-primary-500: #2E9A38;
-  --color-primary-600: #237D2C;
-  --color-primary-700: #1C6424;
-  --color-primary-800: #174F1D;
-  --color-primary-900: #123F18;
-  --color-primary-950: #08240C;
+  /* Primary Emerald Scale */
+  --color-primary-50: #ecfdf5;
+  --color-primary-100: #d1fae5;
+  --color-primary-200: #a7f3d0;
+  --color-primary-300: #6ee7b7;
+  --color-primary-400: #34d399;
+  --color-primary-500: #10b981;
+  --color-primary-600: #059669;
+  --color-primary-700: #047857;
+  --color-primary-800: #065f46;
+  --color-primary-900: #064e3b;
+  --color-primary-950: #022c22;
 
-  /* Accent Scale (Golden Yellow derived from logo leader) */
-  --color-accent-50: #FFFBEA;
-  --color-accent-100: #FFF3C4;
-  --color-accent-200: #FFE78A;
-  --color-accent-300: #FFD84D;
-  --color-accent-400: #FCC81F;
-  --color-accent-500: #F2B705;
-  --color-accent-600: #D19203;
-  --color-accent-700: #A66906;
-  --color-accent-800: #88520C;
-  --color-accent-900: #73430F;
-  --color-accent-950: #432304;
+  /* Accent Amber Scale */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+  --color-accent-950: #451a03;
 
-  /* Info Scale (Blue derived from logo figure) */
-  --color-info-50: #EEF6FD;
-  --color-info-100: #D6E9FA;
-  --color-info-200: #ADD3F5;
-  --color-info-300: #7AB6EE;
-  --color-info-400: #4796E3;
-  --color-info-500: #2479D2;
-  --color-info-600: #1A60B1;
-  --color-info-700: #174D8E;
-  --color-info-800: #174275;
-  --color-info-900: #173962;
-  --color-info-950: #0F2441;
-
-  /* Danger Scale (Red/Crimson derived from logo figure) */
-  --color-danger-50: #FDF0F0;
-  --color-danger-100: #FBDCDC;
-  --color-danger-200: #F6B8B8;
-  --color-danger-300: #EE8787;
-  --color-danger-400: #E25454;
-  --color-danger-500: #CF2E2E;
-  --color-danger-600: #B02222;
-  --color-danger-700: #8F1D1D;
-  --color-danger-800: #761C1C;
-  --color-danger-900: #621C1C;
-  --color-danger-950: #360A0A;
-
-  /* Ink Scale (Green-tinted charcoal text & surface neutrals) */
-  --color-ink-50: #F6F8F5;
-  --color-ink-100: #ECEFEA;
-  --color-ink-200: #D9DED6;
-  --color-ink-300: #BCC4B8;
-  --color-ink-400: #8F9A8B;
-  --color-ink-500: #6B7667;
-  --color-ink-600: #535D50;
-  --color-ink-700: #424A40;
-  --color-ink-800: #2E352D;
-  --color-ink-900: #1F2A22;
-  --color-ink-950: #111711;
-
-  /* Paper Background (soft warm off-white, anti-harsh) */
-  --color-paper: #F7F8F4;
+  /* Slate Neutral Scale */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
 }
-/* END: ThemeTokens */
+
+/* Custom interactive styling layer */
+@layer utilities {
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
+}
+
+/**
+ * END OF FILE: frontend/src/css/base/theme.css
+ */

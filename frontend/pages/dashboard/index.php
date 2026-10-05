@@ -297,16 +297,10 @@ require_once __DIR__ . '/../../components/head.php';
 </div>
 <!-- END OF ELEMENT: dashboard-page-root -->
 
-<!-- Help Drawer Partial -->
-<?php require_once __DIR__ . '/../../components/drawer-help.php'; ?>
-
-<!-- Toast Container Partial -->
+<!-- Generic Parent Components -->
+<?php require_once __DIR__ . '/../../components/drawer.php'; ?>
+<?php require_once __DIR__ . '/../../components/modal.php'; ?>
 <?php require_once __DIR__ . '/../../components/toast.php'; ?>
-
-<!-- Flowbite Modal Alert Partial (Rule #4) -->
-<?php require_once __DIR__ . '/../../components/modal-alert.php'; ?>
-
-<!-- Script Assets Bundler Partial -->
 <?php require_once __DIR__ . '/../../components/scripts.php'; ?>
 
 <?php

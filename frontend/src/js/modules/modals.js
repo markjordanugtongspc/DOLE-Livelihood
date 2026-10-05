@@ -1,6 +1,6 @@
 /**
  * START OF FILE: frontend/src/js/modules/modals.js
- * Purpose: Central Flowbite modal manager implementing Rule #4 for all pop-up modal interactions
+ * Purpose: Central Flowbite modal manager implementing Rule #4 with dynamic content injection
  */
 
 // START OF CLASS: ModalManager - Controls Flowbite pop-up modals
@@ -9,7 +9,8 @@ export class ModalManager {
    * START OF FUNCTION: constructor
    * Purpose: Initializes modal registry and DOM observation
    */
-  constructor() {
+  constructor(defaultModalId = 'app-modal') {
+    this.defaultModalId = defaultModalId;
     this.modals = new Map();
   }
   // END OF FUNCTION: constructor
@@ -30,13 +31,13 @@ export class ModalManager {
    */
   bindGlobalTriggers() {
     document.addEventListener('click', (e) => {
-      const showBtn = e.target.closest('[data-modal-show]');
+      const showBtn = e.target.closest('[data-modal-show], [data-modal-target]');
       const hideBtn = e.target.closest('[data-modal-hide]');
       const toggleBtn = e.target.closest('[data-modal-toggle]');
 
       if (showBtn) {
         e.preventDefault();
-        const targetId = showBtn.getAttribute('data-modal-show');
+        const targetId = showBtn.getAttribute('data-modal-show') || showBtn.getAttribute('data-modal-target');
         this.show(targetId);
       } else if (hideBtn) {
         e.preventDefault();
@@ -61,7 +62,7 @@ export class ModalManager {
    * START OF FUNCTION: show
    * Purpose: Displays a Flowbite modal by ID and displays its backdrop
    */
-  show(modalId) {
+  show(modalId = this.defaultModalId) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
 
@@ -78,7 +79,7 @@ export class ModalManager {
    * START OF FUNCTION: hide
    * Purpose: Hides a Flowbite modal by ID and removes backdrop
    */
-  hide(modalId) {
+  hide(modalId = this.defaultModalId) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
 
@@ -97,7 +98,7 @@ export class ModalManager {
    * START OF FUNCTION: toggle
    * Purpose: Toggles modal visible/hidden state
    */
-  toggle(modalId) {
+  toggle(modalId = this.defaultModalId) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
 
@@ -131,7 +132,7 @@ export class ModalManager {
 
     const backdrop = document.createElement('div');
     backdrop.id = backdropId;
-    backdrop.className = 'fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs transition-opacity duration-300';
+    backdrop.className = 'fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-xs transition-opacity duration-300';
     backdrop.setAttribute('modal-backdrop', '');
     backdrop.addEventListener('click', () => this.hide(modalId));
     document.body.appendChild(backdrop);
@@ -155,31 +156,30 @@ export class ModalManager {
    * START OF FUNCTION: openAlert
    * Purpose: Programmatically open alert modal with custom title, body, and confirm handler
    */
-  openAlert(title, message, onConfirm = null) {
-    const modal = document.getElementById('modal-alert');
+  openAlert(title, message, onConfirm = null, modalId = this.defaultModalId) {
+    const modal = document.getElementById(modalId);
     if (!modal) return;
 
-    const titleEl = modal.querySelector('#modal-alert-title');
-    const msgEl = modal.querySelector('#modal-alert-message');
-    const confirmBtn = modal.querySelector('#modal-alert-confirm-btn');
+    const titleEl = modal.querySelector(`#${modalId}-title`) || modal.querySelector('h3');
+    const msgEl = modal.querySelector(`#${modalId}-message`) || modal.querySelector('p');
+    const confirmBtn = modal.querySelector(`#${modalId}-btn-confirm`) || modal.querySelector('button[data-modal-hide]');
 
-    if (titleEl) titleEl.textContent = title;
-    if (msgEl) msgEl.textContent = message;
+    if (titleEl && title) titleEl.textContent = title;
+    if (msgEl && message) msgEl.textContent = message;
 
     if (confirmBtn) {
-      // Replace button clone to clean previous listeners
       const newBtn = confirmBtn.cloneNode(true);
       confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
 
       newBtn.addEventListener('click', () => {
-        this.hide('modal-alert');
+        this.hide(modalId);
         if (typeof onConfirm === 'function') {
           onConfirm();
         }
       });
     }
 
-    this.show('modal-alert');
+    this.show(modalId);
   }
   // END OF FUNCTION: openAlert
 }

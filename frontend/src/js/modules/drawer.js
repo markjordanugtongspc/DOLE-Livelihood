@@ -1,15 +1,15 @@
 /**
  * START OF FILE: frontend/src/js/modules/drawer.js
- * Purpose: Wrapper for Flowbite Drawer off-canvas component with backdrop handling
+ * Purpose: Universal Flowbite off-canvas Drawer controller with dynamic content injection
  */
 
-// START OF CLASS: DrawerManager - Controls off-canvas help and detail drawers
+// START OF CLASS: DrawerManager - Controls off-canvas drawers
 export class DrawerManager {
   /**
    * START OF FUNCTION: constructor
-   * Purpose: Initializes drawer target element and triggers
+   * Purpose: Initializes drawer target element and backdrop references
    */
-  constructor(drawerId = 'drawer-help-right') {
+  constructor(drawerId = 'app-drawer') {
     this.drawerId = drawerId;
     this.drawerEl = document.getElementById(drawerId);
     this.backdropEl = null;
@@ -22,9 +22,12 @@ export class DrawerManager {
    * Purpose: Binds show, hide, and backdrop click handlers
    */
   init() {
+    if (!this.drawerEl) {
+      this.drawerEl = document.getElementById(this.drawerId);
+    }
     if (!this.drawerEl) return this;
 
-    const showTriggers = document.querySelectorAll(`[data-drawer-show="${this.drawerId}"]`);
+    const showTriggers = document.querySelectorAll(`[data-drawer-show="${this.drawerId}"], [data-drawer-target="${this.drawerId}"]`);
     const hideTriggers = document.querySelectorAll(`[data-drawer-hide="${this.drawerId}"]`);
 
     showTriggers.forEach((btn) => {
@@ -50,6 +53,36 @@ export class DrawerManager {
     return this;
   }
   // END OF FUNCTION: init
+
+  /**
+   * START OF FUNCTION: setContent
+   * Purpose: Dynamically injects title and HTML body into drawer placeholder
+   */
+  setContent(title, htmlContent) {
+    if (!this.drawerEl) return;
+    const titleEl = this.drawerEl.querySelector(`#${this.drawerId}-heading`) || this.drawerEl.querySelector('h3 span');
+    const contentEl = this.drawerEl.querySelector(`#${this.drawerId}-content`);
+
+    if (titleEl && title) {
+      titleEl.textContent = title;
+    }
+    if (contentEl && htmlContent) {
+      contentEl.innerHTML = htmlContent;
+    }
+  }
+  // END OF FUNCTION: setContent
+
+  /**
+   * START OF FUNCTION: open
+   * Purpose: Sets dynamic content if provided and opens drawer
+   */
+  open(options = {}) {
+    if (options.title || options.content) {
+      this.setContent(options.title, options.content);
+    }
+    this.show();
+  }
+  // END OF FUNCTION: open
 
   /**
    * START OF FUNCTION: show
@@ -105,7 +138,7 @@ export class DrawerManager {
 
     this.backdropEl = document.createElement('div');
     this.backdropEl.id = `${this.drawerId}-backdrop`;
-    this.backdropEl.className = 'fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs transition-opacity duration-300';
+    this.backdropEl.className = 'fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300';
     this.backdropEl.addEventListener('click', () => this.hide());
     document.body.appendChild(this.backdropEl);
   }
@@ -124,6 +157,8 @@ export class DrawerManager {
   // END OF FUNCTION: removeBackdrop
 }
 // END OF CLASS: DrawerManager
+
+export const drawer = new DrawerManager('app-drawer');
 
 /**
  * END OF FILE: frontend/src/js/modules/drawer.js

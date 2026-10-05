@@ -49,7 +49,7 @@ function initApp() {
 // Purpose: Sets up PIN keypad, login carousel, OTP controls, and login submission
 function initLoginPage() {
   const carousel = new LoginCarousel('login-carousel').init();
-  const drawer = new DrawerManager('drawer-help-right').init();
+  const drawer = new DrawerManager('app-drawer').init();
   const otp = new OtpController().init();
 
   const pin = new PinInput({
@@ -88,7 +88,7 @@ function initLoginPage() {
 function initDashboardPage() {
   const sidebar = new SidebarManager().init();
   const auth = new AuthController().init();
-  const drawer = new DrawerManager('drawer-help-right').init();
+  const drawer = new DrawerManager('app-drawer').init();
 
   // Initialize charts after DOM layout settles
   setTimeout(() => {

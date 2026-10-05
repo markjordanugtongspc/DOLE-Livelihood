@@ -31,7 +31,7 @@ require_once __DIR__ . '/../../components/head.php';
         <header id="login-hero-header" class="relative z-20 flex items-center justify-between">
             <div id="login-hero-header-brand" class="flex items-center space-x-4">
                 <div id="login-hero-header-logo-container" class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center p-2 shadow-lg">
-                    <img id="login-hero-header-logo" src="/frontend/src/public/images/logo/logo.png" alt="DOLE DILP Logo" class="w-full h-full object-contain">
+                    <img id="login-hero-header-logo" src="<?= \App\core\Vite::asset('frontend/src/public/images/logo/logo.png') ?>" alt="DOLE DILP Logo" class="w-full h-full object-contain">
                 </div>
                 <div id="login-hero-header-text">
                     <h2 id="login-hero-header-agency" class="text-sm font-semibold tracking-wider uppercase text-emerald-200">Department of Labor and Employment</h2>
@@ -64,7 +64,7 @@ require_once __DIR__ . '/../../components/head.php';
         <!-- Mobile Logo and Header (visible on < lg) -->
         <header id="login-mobile-header" class="lg:hidden flex flex-col items-center mb-8 text-center">
             <div id="login-mobile-logo-container" class="w-16 h-16 rounded-2xl bg-emerald-700 flex items-center justify-center p-3 shadow-md mb-3">
-                <img id="login-mobile-logo" src="/frontend/src/public/images/logo/logo.png" alt="DOLE Logo" class="w-full h-full object-contain">
+                <img id="login-mobile-logo" src="<?= \App\core\Vite::asset('frontend/src/public/images/logo/logo.png') ?>" alt="DOLE Logo" class="w-full h-full object-contain">
             </div>
             <h1 id="login-mobile-title" class="text-xl font-bold text-slate-900 dark:text-white">DOLE Livelihood Program</h1>
             <p id="login-mobile-subtitle" class="text-xs text-slate-500 dark:text-slate-400">Sign in to your account</p>

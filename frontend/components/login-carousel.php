@@ -1,113 +1,101 @@
 <?php
-/* START: LoginCarouselComponent — left-side hero image slider with solid primary background */
+/**
+ * START OF FILE: frontend/components/login-carousel.php
+ * Purpose: Left-side hero background image slider with solid primary overlay
+ */
 ?>
-<section id="login-hero" class="relative overflow-hidden bg-primary-800 text-white min-h-[22rem] lg:min-h-full flex flex-col justify-between p-8 sm:p-12 lg:p-16">
-    <!-- Carousel Background Container (Flowbite carousel) -->
-    <div id="login-hero-carousel" class="absolute inset-0 size-full" data-carousel="slide" data-carousel-interval="6000">
-        <!-- Slide 1: Agriculture / Farming -->
-        <div id="login-hero-carousel-item-1" class="hidden duration-1000 ease-in-out size-full" data-carousel-item="active">
-            <img
-                id="login-hero-img-1"
-                src="/frontend/src/public/images/carousel/slide-1.jpg"
-                alt="Agricultural Livelihood"
-                class="carousel-slide-img"
-            >
-            <div id="login-hero-overlay-1" class="carousel-overlay"></div>
-        </div>
-
-        <!-- Slide 2: Sari-sari Store / Micro Business -->
-        <div id="login-hero-carousel-item-2" class="hidden duration-1000 ease-in-out size-full" data-carousel-item>
-            <img
-                id="login-hero-img-2"
-                src="/frontend/src/public/images/carousel/slide-2.jpg"
-                alt="Micro Business Enterprise"
-                class="carousel-slide-img"
-            >
-            <div id="login-hero-overlay-2" class="carousel-overlay"></div>
-        </div>
-
-        <!-- Slide 3: Fisherfolk Community -->
-        <div id="login-hero-carousel-item-3" class="hidden duration-1000 ease-in-out size-full" data-carousel-item>
-            <img
-                id="login-hero-img-3"
-                src="/frontend/src/public/images/carousel/slide-3.jpg"
-                alt="Fisherfolk Livelihood"
-                class="carousel-slide-img"
-            >
-            <div id="login-hero-overlay-3" class="carousel-overlay"></div>
-        </div>
-
-        <!-- Slide 4: Tailoring and Handicrafts -->
-        <div id="login-hero-carousel-item-4" class="hidden duration-1000 ease-in-out size-full" data-carousel-item>
-            <img
-                id="login-hero-img-4"
-                src="/frontend/src/public/images/carousel/slide-4.jpg"
-                alt="Community Tailoring & Crafts"
-                class="carousel-slide-img"
-            >
-            <div id="login-hero-overlay-4" class="carousel-overlay"></div>
-        </div>
-
-        <!-- Slide Indicators -->
-        <div id="login-hero-carousel-indicators" class="absolute z-20 flex -translate-x-1/2 bottom-8 left-12 sm:left-16 space-x-3 rtl:space-x-reverse">
-            <button id="login-hero-carousel-indicator-1" type="button" class="size-3.5 rounded-full cursor-pointer transition-all bg-accent-400 hover:scale-125" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-            <button id="login-hero-carousel-indicator-2" type="button" class="size-3.5 rounded-full cursor-pointer transition-all bg-white/50 hover:bg-accent-400 hover:scale-125" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-            <button id="login-hero-carousel-indicator-3" type="button" class="size-3.5 rounded-full cursor-pointer transition-all bg-white/50 hover:bg-accent-400 hover:scale-125" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-            <button id="login-hero-carousel-indicator-4" type="button" class="size-3.5 rounded-full cursor-pointer transition-all bg-white/50 hover:bg-accent-400 hover:scale-125" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-        </div>
-
-        <!-- Carousel Slider Controls -->
-        <button id="login-hero-carousel-btn-prev" type="button" class="absolute top-1/2 -translate-y-1/2 start-4 z-20 flex items-center justify-center size-12 rounded-full bg-black/25 hover:bg-black/50 text-white cursor-pointer focus:outline-hidden transition" data-carousel-prev>
-            <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </button>
-        <button id="login-hero-carousel-btn-next" type="button" class="absolute top-1/2 -translate-y-1/2 end-4 z-20 flex items-center justify-center size-12 rounded-full bg-black/25 hover:bg-black/50 text-white cursor-pointer focus:outline-hidden transition" data-carousel-next>
-            <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </button>
+<!-- Carousel Background Container (Flowbite carousel) -->
+<div id="login-carousel" class="absolute inset-0 size-full overflow-hidden pointer-events-none" data-carousel="slide">
+    <!-- Slide 1: Agriculture / Farming -->
+    <div id="login-carousel-item-1" class="hidden duration-1000 ease-in-out size-full transition-opacity" data-carousel-item>
+        <img
+            id="login-carousel-img-1"
+            src="<?= \App\core\Vite::asset('frontend/src/public/images/carousel/slide-1.jpg') ?>"
+            alt="Agricultural Livelihood"
+            class="w-full h-full object-cover opacity-25"
+        >
     </div>
 
-    <!-- Foreground Content: Top Badge & Hero Title -->
-    <div id="login-hero-header" class="relative z-20">
-        <div id="login-hero-agency-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-900/60 border border-primary-500/40 text-accent-300 text-xs sm:text-sm font-bold tracking-wide uppercase shadow-xs backdrop-blur-xs">
-            <span class="size-2 rounded-full bg-accent-400 animate-pulse"></span>
-            Republic of the Philippines &bull; DOLE
+    <!-- Slide 2: Micro Business -->
+    <div id="login-carousel-item-2" class="hidden duration-1000 ease-in-out size-full transition-opacity" data-carousel-item>
+        <img
+            id="login-carousel-img-2"
+            src="<?= \App\core\Vite::asset('frontend/src/public/images/carousel/slide-2.jpg') ?>"
+            alt="Micro Business Enterprise"
+            class="w-full h-full object-cover opacity-25"
+        >
+    </div>
+
+    <!-- Slide 3: Fisherfolk Community -->
+    <div id="login-carousel-item-3" class="hidden duration-1000 ease-in-out size-full transition-opacity" data-carousel-item>
+        <img
+            id="login-carousel-img-3"
+            src="<?= \App\core\Vite::asset('frontend/src/public/images/carousel/slide-3.jpg') ?>"
+            alt="Fisherfolk Livelihood"
+            class="w-full h-full object-cover opacity-25"
+        >
+    </div>
+
+    <!-- Slide 4: Tailoring and Crafts -->
+    <div id="login-carousel-item-4" class="hidden duration-1000 ease-in-out size-full transition-opacity" data-carousel-item>
+        <img
+            id="login-carousel-img-4"
+            src="<?= \App\core\Vite::asset('frontend/src/public/images/carousel/slide-4.jpg') ?>"
+            alt="Community Tailoring & Crafts"
+            class="w-full h-full object-cover opacity-25"
+        >
+    </div>
+</div>
+
+<!-- Hero Content Overlay (Placed in middle) -->
+<div id="login-hero-center-content" class="relative z-20 my-auto py-8 max-w-xl">
+    <div id="login-hero-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900/80 border border-emerald-400/30 text-amber-300 text-xs font-bold tracking-wide uppercase shadow-xs mb-4">
+        <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span>Republic of the Philippines &bull; DOLE</span>
+    </div>
+    <h2 id="login-hero-heading" class="text-3xl sm:text-4xl xl:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        DOLE Integrated Livelihood Program
+    </h2>
+    <p id="login-hero-description" class="mt-4 text-base sm:text-lg text-emerald-100/90 font-medium leading-relaxed">
+        Empowering working individuals, micro-entrepreneurs, and livelihood beneficiaries across the nation with accessible public assistance.
+    </p>
+
+    <!-- Key Highlights -->
+    <div id="login-hero-features" class="mt-6 flex flex-wrap gap-4 text-xs sm:text-sm font-semibold text-emerald-100">
+        <div class="flex items-center gap-1.5">
+            <span class="flex items-center justify-center size-5 rounded-full bg-amber-400 text-slate-900 font-bold text-2xs">&check;</span>
+            <span>Secure PIN Access</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+            <span class="flex items-center justify-center size-5 rounded-full bg-amber-400 text-slate-900 font-bold text-2xs">&check;</span>
+            <span>Mobile OTP Verification</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+            <span class="flex items-center justify-center size-5 rounded-full bg-amber-400 text-slate-900 font-bold text-2xs">&check;</span>
+            <span>Real-Time Auditing</span>
         </div>
     </div>
 
-    <!-- Foreground Content: Main Headline & Program Description -->
-    <div id="login-hero-content" class="relative z-20 my-auto py-12 max-w-2xl">
-        <h2 id="login-hero-heading" class="text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            DOLE Integrated Livelihood Program
-        </h2>
-        <p id="login-hero-description" class="mt-4 text-lg sm:text-xl text-primary-100 font-medium leading-relaxed">
-            Empowering working individuals, micro-entrepreneurs, and livelihood beneficiaries across the nation with accessible public assistance.
-        </p>
-
-        <div id="login-hero-features" class="mt-8 flex flex-wrap gap-4 sm:gap-6 text-sm sm:text-base font-semibold text-primary-100">
-            <div id="login-hero-feature-1" class="flex items-center gap-2">
-                <span class="flex items-center justify-center size-6 rounded-full bg-accent-400 text-ink-950 font-bold text-xs">&check;</span>
-                Secure PIN Authentication
-            </div>
-            <div id="login-hero-feature-2" class="flex items-center gap-2">
-                <span class="flex items-center justify-center size-6 rounded-full bg-accent-400 text-ink-950 font-bold text-xs">&check;</span>
-                Mobile Phone Verified
-            </div>
-            <div id="login-hero-feature-3" class="flex items-center gap-2">
-                <span class="flex items-center justify-center size-6 rounded-full bg-accent-400 text-ink-950 font-bold text-xs">&check;</span>
-                Real-Time Auditing
-            </div>
+    <!-- Slide Indicators & Controls -->
+    <div id="login-hero-controls" class="flex items-center space-x-4 mt-8">
+        <div id="login-carousel-indicators" class="flex items-center space-x-2">
+            <button type="button" class="cursor-pointer h-2.5 w-8 rounded-full bg-white transition-all duration-300" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+            <button type="button" class="cursor-pointer h-2.5 w-3 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+            <button type="button" class="cursor-pointer h-2.5 w-3 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+            <button type="button" class="cursor-pointer h-2.5 w-3 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+        </div>
+        <div class="flex items-center space-x-2 ml-4">
+            <button type="button" id="login-carousel-prev" data-carousel-prev class="cursor-pointer p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition" aria-label="Previous slide">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button type="button" id="login-carousel-next" data-carousel-next class="cursor-pointer p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition" aria-label="Next slide">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
         </div>
     </div>
-
-    <!-- Foreground Content: Footer Note -->
-    <div id="login-hero-footer" class="relative z-20 text-xs sm:text-sm text-primary-200/80 font-medium">
-        &copy; <?= date('Y') ?> Department of Labor and Employment. All rights reserved.
-    </div>
-</section>
+</div>
 <?php
-/* END: LoginCarouselComponent */
+/**
+ * END OF FILE: frontend/components/login-carousel.php
+ */
+?>

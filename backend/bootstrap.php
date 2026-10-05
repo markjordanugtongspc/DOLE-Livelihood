@@ -9,9 +9,14 @@ if (file_exists($rootPath . '/vendor/autoload.php')) {
 }
 
 // Load .env configuration
-if (class_exists(\Dotenv\Dotenv::class) && file_exists($rootPath . '/config/.env')) {
-    $dotenv = \Dotenv\Dotenv::createImmutable($rootPath . '/config');
-    $dotenv->safeLoad();
+if (class_exists(\Dotenv\Dotenv::class)) {
+    if (file_exists($rootPath . '/.env')) {
+        $dotenv = \Dotenv\Dotenv::createImmutable($rootPath);
+        $dotenv->safeLoad();
+    } elseif (file_exists($rootPath . '/config/.env')) {
+        $dotenv = \Dotenv\Dotenv::createImmutable($rootPath . '/config');
+        $dotenv->safeLoad();
+    }
 }
 
 // Configure error reporting based on APP_DEBUG

@@ -6,7 +6,7 @@ $imgClass = ($size === 'small') ? 'h-10 w-auto' : 'h-16 w-auto sm:h-20';
 <div id="brand-logo-container" class="flex items-center gap-4">
     <img
         id="brand-logo-image"
-        src="/frontend/src/public/images/logo/logo.png"
+        src="<?= \App\core\Vite::asset('frontend/src/public/images/logo/logo.png') ?>"
         alt="DILP Logo"
         class="<?= $imgClass ?> object-contain drop-shadow-sm"
         onerror="this.style.display='none'; document.getElementById('brand-logo-fallback').classList.remove('hidden');"

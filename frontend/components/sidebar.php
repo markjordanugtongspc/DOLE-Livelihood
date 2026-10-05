@@ -14,7 +14,7 @@ $currentUser = AuthService::user() ?? ['name' => 'Administrator', 'role' => 'adm
             <div id="dashboard-sidebar-brand-info" class="flex items-center gap-3 overflow-hidden">
                 <img
                     id="dashboard-sidebar-logo"
-                    src="/frontend/src/public/images/logo/logo.png"
+                    src="<?= \App\core\Vite::asset('frontend/src/public/images/logo/logo.png') ?>"
                     alt="DILP"
                     class="size-10 object-contain shrink-0"
                     onerror="this.style.display='none'; document.getElementById('dashboard-sidebar-logo-fallback').classList.remove('hidden');"

@@ -22,8 +22,8 @@ Options +FollowSymLinks
     # Route /api/* to backend API front controller
     RewriteRule ^api(/.*)?$ backend/api/index.php [QSA,L]
 
-    # Route /dashboard/ to dashboard page
-    RewriteRule ^dashboard/?$ pages/dashboard/index.php [QSA,L]
+    # Route /dashboard/ to frontend dashboard page
+    RewriteRule ^dashboard/?$ frontend/pages/dashboard/index.php [QSA,L]
 
     # Default fallback to index.php
     RewriteRule ^$ index.php [L]

@@ -1,5 +1,6 @@
 # DOLE Integrated Livelihood System (DILP) Management Information System
 
+
 > Official web portal for the Department of Labor and Employment (DOLE) – Bureau of Workers with Special Concerns (BWSC) Kabuhayan System.
 
 ---
@@ -275,5 +276,6 @@ All API requests return standardized JSON and require a valid CSRF token header 
 6. **START and END Comments (Rule #9):** Every function, class, and PHP partial is demarcated with explicit `START OF` and `END OF` comments.
 7. **Version Control Build Hook (Rule #10):** Always run `npm run build` to update assets and bump version control.
 
+---
 ---
 *Developed for the DOLE Bureau of Workers with Special Concerns (BWSC).*

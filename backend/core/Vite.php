@@ -14,11 +14,17 @@ class Vite
         if (isset($_ENV['VITE_DEV'])) {
             $isDev = filter_var($_ENV['VITE_DEV'], FILTER_VALIDATE_BOOLEAN);
         } else {
-            // Check if dev server port 5173 responds quickly
-            $connection = @fsockopen('127.0.0.1', 5173, $errno, $errstr, 0.1);
+            // Check if dev server port 5173 responds
+            $connection = @fsockopen('127.0.0.1', 5173, $errno, $errstr, 0.2);
             if (is_resource($connection)) {
                 $isDev = true;
                 fclose($connection);
+            } else {
+                $connection = @fsockopen('localhost', 5173, $errno, $errstr, 0.2);
+                if (is_resource($connection)) {
+                    $isDev = true;
+                    fclose($connection);
+                }
             }
         }
 
@@ -29,16 +35,14 @@ class Vite
 HTML;
         }
 
-        // Determine base path for Laragon (e.g. /Livelihood or empty)
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+        // Determine base path for Laragon subfolder (e.g. /Livelihood or empty for vhosts)
         $baseDir = '';
-        if (strpos($scriptName, '/Livelihood') === 0 || strpos($_SERVER['REQUEST_URI'] ?? '', '/Livelihood') === 0 || strpos($_SERVER['REQUEST_URI'] ?? '', '/livelihood') === 0) {
-            // Check casing from request uri
-            if (preg_match('#^/([^/]+)#', $_SERVER['REQUEST_URI'] ?? '', $m) && strtolower($m[1]) === 'livelihood') {
-                $baseDir = '/' . $m[1];
-            } else {
-                $baseDir = '/Livelihood';
-            }
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+        if (preg_match('#^/([^/]+)#', $requestUri, $m) && strtolower($m[1]) === 'livelihood') {
+            $baseDir = '/' . $m[1];
+        } elseif (preg_match('#^/([^/]+)#', $scriptName, $m) && strtolower($m[1]) === 'livelihood') {
+            $baseDir = '/' . $m[1];
         }
 
         $rootPath = dirname(__DIR__, 2);
@@ -79,14 +83,13 @@ HTML;
     /* START: asset — returns relative URL for public assets with base path support */
     public static function asset(string $path): string
     {
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
         $baseDir = '';
-        if (strpos($scriptName, '/Livelihood') === 0 || strpos($_SERVER['REQUEST_URI'] ?? '', '/Livelihood') === 0 || strpos($_SERVER['REQUEST_URI'] ?? '', '/livelihood') === 0) {
-            if (preg_match('#^/([^/]+)#', $_SERVER['REQUEST_URI'] ?? '', $m) && strtolower($m[1]) === 'livelihood') {
-                $baseDir = '/' . $m[1];
-            } else {
-                $baseDir = '/Livelihood';
-            }
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+        if (preg_match('#^/([^/]+)#', $requestUri, $m) && strtolower($m[1]) === 'livelihood') {
+            $baseDir = '/' . $m[1];
+        } elseif (preg_match('#^/([^/]+)#', $scriptName, $m) && strtolower($m[1]) === 'livelihood') {
+            $baseDir = '/' . $m[1];
         }
         $cleanPath = '/' . ltrim($path, '/');
         return $baseDir . $cleanPath;

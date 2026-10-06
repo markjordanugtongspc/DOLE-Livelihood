@@ -1,6 +1,6 @@
 /**
  * START OF FILE: frontend/src/js/modules/modals.js
- * Purpose: Central Flowbite modal manager implementing Rule #4 with dynamic content injection
+ * Purpose: Central Flowbite modal manager implementing Rule #4
  */
 
 // START OF CLASS: ModalManager - Controls Flowbite pop-up modals
@@ -11,7 +11,6 @@ export class ModalManager {
    */
   constructor(defaultModalId = 'app-modal') {
     this.defaultModalId = defaultModalId;
-    this.modals = new Map();
   }
   // END OF FUNCTION: constructor
 
@@ -38,15 +37,15 @@ export class ModalManager {
       if (showBtn) {
         e.preventDefault();
         const targetId = showBtn.getAttribute('data-modal-show') || showBtn.getAttribute('data-modal-target');
-        this.show(targetId);
+        if (targetId) this.show(targetId);
       } else if (hideBtn) {
         e.preventDefault();
         const targetId = hideBtn.getAttribute('data-modal-hide');
-        this.hide(targetId);
+        if (targetId) this.hide(targetId);
       } else if (toggleBtn) {
         e.preventDefault();
         const targetId = toggleBtn.getAttribute('data-modal-toggle');
-        this.toggle(targetId);
+        if (targetId) this.toggle(targetId);
       }
     });
 
@@ -60,7 +59,7 @@ export class ModalManager {
 
   /**
    * START OF FUNCTION: show
-   * Purpose: Displays a Flowbite modal by ID and displays its backdrop
+   * Purpose: Displays a modal by ID and displays its backdrop
    */
   show(modalId = this.defaultModalId) {
     const modal = document.getElementById(modalId);
@@ -77,7 +76,7 @@ export class ModalManager {
 
   /**
    * START OF FUNCTION: hide
-   * Purpose: Hides a Flowbite modal by ID and removes backdrop
+   * Purpose: Hides a modal by ID and removes backdrop
    */
   hide(modalId = this.defaultModalId) {
     const modal = document.getElementById(modalId);
@@ -154,7 +153,7 @@ export class ModalManager {
 
   /**
    * START OF FUNCTION: openAlert
-   * Purpose: Programmatically open alert modal with custom title, body, and confirm handler
+   * Purpose: Systemmatically open alert modal with custom title, body, and confirm handler
    */
   openAlert(title, message, onConfirm = null, modalId = this.defaultModalId) {
     const modal = document.getElementById(modalId);

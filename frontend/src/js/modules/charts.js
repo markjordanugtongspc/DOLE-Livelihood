@@ -1,6 +1,6 @@
 /**
  * START OF FILE: frontend/src/js/modules/charts.js
- * Purpose: Manages ApexCharts rendering for livelihood statistics and program distributions
+ * Purpose: Manages ApexCharts rendering for livelihood statistics and System distributions
  */
 
 import ApexCharts from 'apexcharts';

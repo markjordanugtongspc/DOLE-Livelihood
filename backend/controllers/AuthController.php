@@ -19,8 +19,8 @@ class AuthController extends BaseController
         $meta  = (array)Request::json('meta', []);
 
         $errors = $this->validate(
-            ['phone' => $phone, 'pin' => $pin],
-            ['phone' => 'required', 'pin' => 'required']
+            ['pin' => $pin],
+            ['pin' => 'required']
         );
 
         if ($errors) {

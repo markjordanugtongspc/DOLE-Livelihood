@@ -36,7 +36,7 @@ function copyDirRecursive(src, dest) {
 // Purpose: Executes full build workflow
 export function buildProject() {
   console.log('========================================================');
-  console.log('   DOLE INTEGRATED LIVELIHOOD PROGRAM (DILP) BUILD      ');
+  console.log('   DOLE INTEGRATED LIVELIHOOD System (DILP) BUILD      ');
   console.log('========================================================');
 
   // Step 1: Pre-build backup

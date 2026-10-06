@@ -1,7 +1,7 @@
 <?php
 /**
  * START OF FILE: frontend/pages/dashboard/index.php
- * Purpose: DOLE Integrated Livelihood Program (DILP) management dashboard
+ * Purpose: DOLE Integrated Livelihood System (DILP) management dashboard
  */
 
 require_once __DIR__ . '/../../../backend/bootstrap.php';
@@ -13,7 +13,7 @@ use App\Middleware\AuthGuard;
 AuthGuard::requireAuth();
 
 $currentUser = Session::get('user');
-$pageTitle = 'Dashboard - DOLE Integrated Livelihood Program (DILP)';
+$pageTitle = 'Dashboard - DOLE Integrated Livelihood System (DILP)';
 
 require_once __DIR__ . '/../../components/head.php';
 ?>
@@ -116,7 +116,7 @@ require_once __DIR__ . '/../../components/head.php';
                         Welcome back, <?php echo htmlspecialchars($currentUser['first_name'] ?? 'Admin', ENT_QUOTES, 'UTF-8'); ?>!
                     </h1>
                     <p id="dashboard-welcome-subheading" class="text-emerald-100/90 text-sm mt-1">
-                        DOLE Integrated Livelihood Program (DILP) real-time project indicators, beneficiary records, and fund allocations.
+                        DOLE Integrated Livelihood System (DILP) real-time project indicators, beneficiary records, and fund allocations.
                     </p>
                 </div>
                 <div class="absolute -right-8 -bottom-10 w-48 h-48 rounded-full bg-white/10 blur-xl pointer-events-none"></div>

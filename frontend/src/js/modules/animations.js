@@ -35,11 +35,48 @@ export default class Animations {
       if (spinnerEl) spinnerEl.classList.add('hidden');
     }
   }
-  /* END: setLoading */
+  /* START: slideLeft — triggers smooth slide left transition on carousel slide element */
+  static slideLeft(element, duration = 700) {
+    if (!element) return;
+    element.style.transition = `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+    element.style.transform = 'translateX(0%)';
+    element.style.opacity = '1';
+  }
+  /* END: slideLeft */
+
+  /* START: slideRight — triggers smooth slide right transition on carousel slide element */
+  static slideRight(element, duration = 700) {
+    if (!element) return;
+    element.style.transition = `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+    element.style.transform = 'translateX(0%)';
+    element.style.opacity = '1';
+  }
+  /* END: slideRight */
+  /* START: pause — pauses automatic progression on target controller or element */
+  static pause(target) {
+    if (!target) return;
+    if (typeof target.pauseAutoPlay === 'function') {
+      target.pauseAutoPlay();
+    }
+  }
+  /* END: pause */
+
+  /* START: play — resumes automatic progression on target controller or element */
+  static play(target) {
+    if (!target) return;
+    if (typeof target.startAutoPlay === 'function') {
+      target.startAutoPlay();
+    }
+  }
+  /* END: play */
 }
 /* END: Animations */
 
 export const shakeElement = (el) => Animations.shake(el);
 export const setButtonLoading = (btn, isLoading, text) => Animations.setLoading(btn, isLoading, text);
+export const slideLeftElement = (el, duration) => Animations.slideLeft(el, duration);
+export const slideRightElement = (el, duration) => Animations.slideRight(el, duration);
+export const pauseAnimation = (target) => Animations.pause(target);
+export const playAnimation = (target) => Animations.play(target);
 export { Animations };
 

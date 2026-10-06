@@ -9,17 +9,8 @@ use App\models\Role;
 class AuthService
 {
     /* START: loginWithPin — verifies credentials and logs in the user */
-    public static function loginWithPin(string $phoneInput, string $pin, array $meta = []): array
+    public static function loginWithPin(?string $phoneInput, string $pin, array $meta = []): array
     {
-        $normalizedPhone = PhoneService::normalize($phoneInput);
-        if (!$normalizedPhone) {
-            return [
-                'success' => false,
-                'status'  => 422,
-                'message' => 'Invalid Philippine mobile number format (e.g. 0917 123 4567)'
-            ];
-        }
-
         $minLen = (int)($_ENV['PIN_MIN_LENGTH'] ?? 4);
         $maxLen = (int)($_ENV['PIN_MAX_LENGTH'] ?? 6);
         $pinLen = strlen($pin);
@@ -32,13 +23,36 @@ class AuthService
             ];
         }
 
-        $user = User::findByPhone($normalizedPhone);
+        $user = null;
+
+        // If phone is provided, match by phone
+        if (!empty($phoneInput)) {
+            $normalizedPhone = PhoneService::normalize($phoneInput);
+            if (!$normalizedPhone) {
+                return [
+                    'success' => false,
+                    'status'  => 422,
+                    'message' => 'Invalid Philippine mobile number format (e.g. 0917 123 4567)'
+                ];
+            }
+            $user = User::findByPhone($normalizedPhone);
+        } else {
+            // PIN-only sign in: find active user whose PIN matches
+            $allUsers = User::all();
+            foreach ($allUsers as $u) {
+                if (($u['status'] ?? 'active') === 'active' && password_verify($pin, $u['pin_hash'])) {
+                    $user = $u;
+                    break;
+                }
+            }
+        }
+
         if (!$user) {
-            ActivityLogger::log('login_failed_unknown_phone', null, 'Phone not found: ' . $normalizedPhone, $meta);
+            ActivityLogger::log('login_failed_unknown', null, 'Invalid PIN authentication attempt', $meta);
             return [
                 'success' => false,
                 'status'  => 401,
-                'message' => 'Invalid phone number or PIN entered'
+                'message' => 'Invalid Security PIN. Please check and try again.'
             ];
         }
 

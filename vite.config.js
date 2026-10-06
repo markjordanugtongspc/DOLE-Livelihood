@@ -23,7 +23,7 @@ export default defineConfig(({ command }) => ({
     liveReloadPhp(),
   ],
   publicDir: false,
-  base: command === 'build' ? '/dist/' : '/',
+  base: command === 'build' ? './' : '/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
@@ -33,14 +33,20 @@ export default defineConfig(({ command }) => ({
     },
   },
   server: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 5173,
     strictPort: true,
     cors: true,
     origin: 'http://localhost:5173',
+    hmr: {
+      host: 'localhost',
+      port: 5173,
+    },
     watch: {
-      // Ensure Vite watches all PHP files in frontend and backend
-      ignored: ['**/vendor/**', '**/storage/**', '**/database/**'],
+      // Use polling if Windows file system events are missed
+      usePolling: true,
+      interval: 100,
+      ignored: ['**/vendor/**', '**/storage/**', '**/database/**', '**/.git/**'],
     },
   },
 }));

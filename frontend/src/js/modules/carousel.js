@@ -3,118 +3,127 @@
  * Purpose: Login image carousel wrapper using Flowbite Carousel API or auto-cycling
  */
 
-// START OF CLASS: LoginCarousel - Manages the hero background image carousel
+// START OF CLASS: LoginCarousel - Manages the hero background image carousel with smooth left sliding
 export class LoginCarousel {
   /**
    * START OF FUNCTION: constructor
    * Purpose: Initializes carousel state and DOM references
    */
-  constructor(carouselElementId = 'login-carousel') {
-    this.container = document.getElementById(carouselElementId);
-    this.items = this.container ? Array.from(this.container.querySelectorAll('[data-carousel-item]')) : [];
-    this.indicators = this.container ? Array.from(this.container.querySelectorAll('[data-carousel-slide-to]')) : [];
-    this.prevBtn = this.container ? this.container.querySelector('[data-carousel-prev]') : null;
-    this.nextBtn = this.container ? this.container.querySelector('[data-carousel-next]') : null;
+  constructor(carouselElementId = 'login-hero-carousel') {
+    this.container = document.getElementById(carouselElementId) || document.getElementById('login-carousel');
+    this.items = this.container ? Array.from(this.container.querySelectorAll('[data-hero-slide], [data-carousel-item]')) : [];
     this.currentIndex = 0;
-    this.intervalMs = 6000;
+    this.intervalMs = 5000;
     this.timer = null;
-    this.isPlaying = true;
+    this.isAnimating = false;
   }
   // END OF FUNCTION: constructor
 
   /**
    * START OF FUNCTION: init
-   * Purpose: Binds carousel events and starts auto-advance
+   * Purpose: Sets up initial positioning, binds hover pause/play, and starts auto-advance
    */
   init() {
     if (!this.container || this.items.length === 0) {
       return this;
     }
 
-    this.showSlide(0);
-    this.bindEvents();
+    this.setupSlides();
+    this.bindHoverEvents();
     this.startAutoPlay();
     return this;
   }
   // END OF FUNCTION: init
 
   /**
-   * START OF FUNCTION: bindEvents
-   * Purpose: Attaches click listeners to next, prev, and indicator dots
+   * START OF FUNCTION: bindHoverEvents
+   * Purpose: Pauses carousel on LEFT-PANEL hover and resumes on leave
    */
-  bindEvents() {
-    if (this.prevBtn) {
-      this.prevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.prev();
-        this.restartAutoPlay();
+  bindHoverEvents() {
+    const leftPanel = document.getElementById('login-hero-section') || this.container;
+    if (leftPanel) {
+      leftPanel.addEventListener('mouseenter', () => {
+        this.pauseAutoPlay();
+      });
+      leftPanel.addEventListener('mouseleave', () => {
+        this.startAutoPlay();
       });
     }
-
-    if (this.nextBtn) {
-      this.nextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.next();
-        this.restartAutoPlay();
-      });
-    }
-
-    this.indicators.forEach((indicator, index) => {
-      indicator.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.showSlide(index);
-        this.restartAutoPlay();
-      });
-    });
-
-    // Pause on hover
-    this.container.addEventListener('mouseenter', () => this.pauseAutoPlay());
-    this.container.addEventListener('mouseleave', () => this.startAutoPlay());
   }
-  // END OF FUNCTION: bindEvents
+  // END OF FUNCTION: bindHoverEvents
+
+  /**
+   * START OF FUNCTION: setupSlides
+   * Purpose: Prepares slide classes and initial transform positioning
+   */
+  setupSlides() {
+    this.items.forEach((item, index) => {
+      item.classList.remove('hidden');
+      if (index === 0) {
+        item.style.transform = 'translateX(0%)';
+        item.style.opacity = '1';
+        item.style.zIndex = '2';
+        item.setAttribute('aria-hidden', 'false');
+      } else {
+        item.style.transform = 'translateX(100%)';
+        item.style.opacity = '0';
+        item.style.zIndex = '1';
+        item.setAttribute('aria-hidden', 'true');
+      }
+      item.style.transition = 'transform 1000ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1)';
+    });
+  }
+  // END OF FUNCTION: setupSlides
 
   /**
    * START OF FUNCTION: showSlide
-   * Purpose: Shows active slide by index and updates indicators
+   * Purpose: Transitions current slide out to the left and incoming slide in from the right to left
    */
-  showSlide(index) {
-    if (index < 0) {
-      index = this.items.length - 1;
-    } else if (index >= this.items.length) {
-      index = 0;
+  showSlide(nextIndex) {
+    if (this.isAnimating || this.items.length <= 1) return;
+    this.isAnimating = true;
+
+    if (nextIndex >= this.items.length) {
+      nextIndex = 0;
+    } else if (nextIndex < 0) {
+      nextIndex = this.items.length - 1;
     }
 
-    this.currentIndex = index;
+    const currentSlide = this.items[this.currentIndex];
+    const nextSlide = this.items[nextIndex];
 
-    this.items.forEach((item, i) => {
-      if (i === index) {
-        item.classList.remove('hidden', 'opacity-0');
-        item.classList.add('block', 'opacity-100');
-        item.setAttribute('aria-hidden', 'false');
-      } else {
-        item.classList.remove('block', 'opacity-100');
-        item.classList.add('hidden', 'opacity-0');
-        item.setAttribute('aria-hidden', 'true');
-      }
-    });
+    // Position next slide on the right before animating in towards the left
+    nextSlide.style.transition = 'none';
+    nextSlide.style.transform = 'translateX(100%)';
+    nextSlide.style.opacity = '0';
+    nextSlide.style.zIndex = '2';
+    void nextSlide.offsetWidth; // Force reflow
 
-    this.indicators.forEach((ind, i) => {
-      if (i === index) {
-        ind.classList.remove('bg-white/40');
-        ind.classList.add('bg-white', 'w-8');
-        ind.setAttribute('aria-current', 'true');
-      } else {
-        ind.classList.remove('bg-white', 'w-8');
-        ind.classList.add('bg-white/40', 'w-3');
-        ind.setAttribute('aria-current', 'false');
-      }
-    });
+    // Animate both slides to the left
+    const transitionStyle = 'transform 1000ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1)';
+    currentSlide.style.transition = transitionStyle;
+    nextSlide.style.transition = transitionStyle;
+
+    currentSlide.style.zIndex = '1';
+    currentSlide.style.transform = 'translateX(-100%)';
+    currentSlide.style.opacity = '0';
+    currentSlide.setAttribute('aria-hidden', 'true');
+
+    nextSlide.style.transform = 'translateX(0%)';
+    nextSlide.style.opacity = '1';
+    nextSlide.setAttribute('aria-hidden', 'false');
+
+    this.currentIndex = nextIndex;
+
+    setTimeout(() => {
+      this.isAnimating = false;
+    }, 1000);
   }
   // END OF FUNCTION: showSlide
 
   /**
    * START OF FUNCTION: next
-   * Purpose: Advances carousel to the next slide
+   * Purpose: Advances carousel to next slide going leftwards
    */
   next() {
     this.showSlide(this.currentIndex + 1);
@@ -123,7 +132,7 @@ export class LoginCarousel {
 
   /**
    * START OF FUNCTION: prev
-   * Purpose: Reverses carousel to the previous slide
+   * Purpose: Reverses carousel to previous slide
    */
   prev() {
     this.showSlide(this.currentIndex - 1);
@@ -132,7 +141,7 @@ export class LoginCarousel {
 
   /**
    * START OF FUNCTION: startAutoPlay
-   * Purpose: Starts interval timer for automatic slide progression
+   * Purpose: Starts interval timer for automatic rightward slide progression
    */
   startAutoPlay() {
     this.pauseAutoPlay();

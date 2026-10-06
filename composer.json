@@ -1,6 +1,6 @@
 {
     "name": "dole/livelihood",
-    "description": "DOLE Integrated Livelihood Program (DILP) Management System",
+    "description": "DOLE Integrated Livelihood System (DILP) Management System",
     "type": "project",
     "require": {
         "php": ">=8.2",

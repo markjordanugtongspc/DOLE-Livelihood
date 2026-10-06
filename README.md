@@ -1,6 +1,6 @@
-# DOLE Integrated Livelihood Program (DILP) Management Information System
+# DOLE Integrated Livelihood System (DILP) Management Information System
 
-> Official web portal for the Department of Labor and Employment (DOLE) – Bureau of Workers with Special Concerns (BWSC) Kabuhayan Program.
+> Official web portal for the Department of Labor and Employment (DOLE) – Bureau of Workers with Special Concerns (BWSC) Kabuhayan System.
 
 ---
 

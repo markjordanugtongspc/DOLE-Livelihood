@@ -3,7 +3,7 @@
 use App\core\Csrf;
 use App\core\Vite;
 
-$pageTitle = $pageTitle ?? 'Livelihood - DOLE Integrated Livelihood Program';
+$pageTitle = $pageTitle ?? 'Livelihood - DOLE Integrated Livelihood System';
 $packageJson = json_decode(file_get_contents(dirname(__DIR__, 2) . '/package.json'), true);
 $appVersion = $packageJson['version'] ?? '1.0.0';
 ?>
@@ -16,7 +16,7 @@ $appVersion = $packageJson['version'] ?? '1.0.0';
 <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
 
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="/frontend/src/public/images/icons/favicon.png">
+<link rel="icon" type="image/png" href="<?= Vite::asset('frontend/src/public/images/icons/favicon.png') ?>">
 
 <!-- Vite Compiled / Dev Assets -->
 <?= Vite::tags('frontend/src/js/main.js') ?>

@@ -1,7 +1,8 @@
 /* START: Typography — government style big and bold font rules */
 body {
   font-family: var(--font-sans);
-  font-size: 1.125rem; /* 18px base text for 30-40+ accessibility */
+  font-size: 1.125rem;
+  /* 18px base text for 30-40+ accessibility */
   line-height: 1.6;
   color: var(--color-ink-900);
   background-color: var(--color-paper);
@@ -9,36 +10,43 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, .h1 {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+h1,
+.h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
   font-weight: 800;
   letter-spacing: -0.025em;
   color: var(--color-ink-950);
 }
 
 @media (min-width: 1024px) {
-  h1, .h1 {
-    font-size: 3rem;
-    line-height: 1.15;
+
+  h1,
+  .h1 {
+    font-size: 2.35rem;
+    line-height: 1.2;
   }
 }
 
 @media (min-width: 1920px) {
-  h1, .h1 {
-    font-size: 3.75rem;
-    line-height: 1.1;
+
+  h1,
+  .h1 {
+    font-size: 2.85rem;
+    line-height: 1.15;
   }
 }
 
-h2, .h2 {
-  font-size: 1.875rem;
+h2,
+.h2 {
+  font-size: 1.724rem;
   line-height: 2.25rem;
   font-weight: 700;
   color: var(--color-ink-900);
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 700;
@@ -50,4 +58,5 @@ label {
   font-weight: 600;
   color: var(--color-ink-800);
 }
+
 /* END: Typography */

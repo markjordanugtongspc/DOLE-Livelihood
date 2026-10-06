@@ -48,7 +48,7 @@ function initApp() {
 // START OF FUNCTION: initLoginPage
 // Purpose: Sets up PIN keypad, login carousel, OTP controls, and login submission
 function initLoginPage() {
-  const carousel = new LoginCarousel('login-carousel').init();
+  const carousel = new LoginCarousel('login-hero-carousel').init();
   const drawer = new DrawerManager('app-drawer').init();
   const otp = new OtpController().init();
 
@@ -60,17 +60,12 @@ function initLoginPage() {
     minLength: 4,
     maxLength: 6,
     onComplete: (pinValue) => {
-      // Auto-focus submit or trigger validation if phone is entered
-      const phoneInput = document.getElementById('login-form-phone-input');
-      if (phoneInput && phoneInput.value.trim().length >= 11) {
-        document.getElementById('login-form-submit-btn')?.focus();
-      }
+      document.getElementById('login-form-submit-btn')?.focus();
     }
   }).init();
 
   const auth = new AuthController({
     formId: 'login-form',
-    phoneInputId: 'login-form-phone-input',
     submitBtnId: 'login-form-submit-btn',
     pinInput: pin
   }).init();

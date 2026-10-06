@@ -4,45 +4,44 @@ namespace App\core;
 /* START: Vite — asset loader supporting hot dev server and production manifest */
 class Vite
 {
+    /* START: getBaseDir — calculates URL base folder dynamically for Laragon or subfolder hosting */
+    public static function getBaseDir(): string
+    {
+        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+        $dir = str_replace('\\', '/', dirname($scriptName));
+        if ($dir === '/' || $dir === '.') {
+            return '';
+        }
+        return rtrim($dir, '/');
+    }
+    /* END: getBaseDir */
+
     /* START: tags — renders HTML link and script tags for Vite bundles */
     public static function tags(string $entry = 'frontend/src/js/main.js'): string
     {
-        $devServer = rtrim($_ENV['VITE_DEV_URL'] ?? 'http://localhost:5173', '/');
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $isLocalhost = in_array(parse_url("http://{$host}", PHP_URL_HOST), ['localhost', '127.0.0.1', '::1']);
         
-        // Auto-detect if Vite dev server is currently running on localhost:5173
+        // Auto-detect if Vite dev server is running on localhost:5173
         $isDev = false;
         if (isset($_ENV['VITE_DEV'])) {
             $isDev = filter_var($_ENV['VITE_DEV'], FILTER_VALIDATE_BOOLEAN);
         } else {
-            // Check if dev server port 5173 responds
             $connection = @fsockopen('127.0.0.1', 5173, $errno, $errstr, 0.2);
             if (is_resource($connection)) {
                 $isDev = true;
                 fclose($connection);
-            } else {
-                $connection = @fsockopen('localhost', 5173, $errno, $errstr, 0.2);
-                if (is_resource($connection)) {
-                    $isDev = true;
-                    fclose($connection);
-                }
             }
         }
 
-        if ($isDev) {
+        $baseDir = self::getBaseDir();
+
+        if ($isDev && $isLocalhost) {
+            $devServer = rtrim($_ENV['VITE_DEV_URL'] ?? 'http://localhost:5173', '/');
             return <<<HTML
     <script type="module" src="{$devServer}/@vite/client"></script>
     <script type="module" src="{$devServer}/{$entry}"></script>
 HTML;
-        }
-
-        // Determine base path for Laragon subfolder (e.g. /Livelihood or empty for vhosts)
-        $baseDir = '';
-        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-        if (preg_match('#^/([^/]+)#', $requestUri, $m) && strtolower($m[1]) === 'livelihood') {
-            $baseDir = '/' . $m[1];
-        } elseif (preg_match('#^/([^/]+)#', $scriptName, $m) && strtolower($m[1]) === 'livelihood') {
-            $baseDir = '/' . $m[1];
         }
 
         $rootPath = dirname(__DIR__, 2);
@@ -83,17 +82,11 @@ HTML;
     /* START: asset — returns relative URL for public assets with base path support */
     public static function asset(string $path): string
     {
-        $baseDir = '';
-        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-        if (preg_match('#^/([^/]+)#', $requestUri, $m) && strtolower($m[1]) === 'livelihood') {
-            $baseDir = '/' . $m[1];
-        } elseif (preg_match('#^/([^/]+)#', $scriptName, $m) && strtolower($m[1]) === 'livelihood') {
-            $baseDir = '/' . $m[1];
-        }
+        $baseDir = self::getBaseDir();
         $cleanPath = '/' . ltrim($path, '/');
         return $baseDir . $cleanPath;
     }
+    /* END: asset */
     /* END: asset */
 }
 /* END: Vite */

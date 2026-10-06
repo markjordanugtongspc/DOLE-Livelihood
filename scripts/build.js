@@ -50,7 +50,9 @@ export function buildProject() {
   // Step 3: Vite production build
   console.log('\n[Step 3/5] Compiling Vite production assets...');
   try {
-    execSync('npx vite build', { stdio: 'inherit' });
+    const viteScript = path.resolve('node_modules/vite/bin/vite.js');
+    const nodeBin = process.execPath;
+    execSync(`"${nodeBin}" "${viteScript}" build`, { stdio: 'inherit' });
     console.log('     ✓ Vite build completed successfully.');
   } catch (err) {
     console.error('     ✗ Vite compilation failed.');

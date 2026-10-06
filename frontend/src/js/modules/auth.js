@@ -6,6 +6,7 @@
 import { apiClient } from './api.js';
 import { toast } from './toast.js';
 import { modals } from './modals.js';
+import { Animations } from './animations.js';
 
 // START OF CLASS: AuthController - Manages login form and user authentication
 export class AuthController {
@@ -245,7 +246,10 @@ export class AuthController {
       return;
     }
 
-    this.setLoading(true);
+    this.setButtonState('loading');
+
+    // Introduce a minimum delay for spinner visibility so UX feels intentional
+    const minLoadingTime = new Promise((resolve) => setTimeout(resolve, 800));
 
     try {
       const payload = { pin };
@@ -253,53 +257,111 @@ export class AuthController {
         payload.phone = phoneRaw;
       }
 
-      const response = await apiClient.post('/api/auth/login', payload);
+      const [response] = await Promise.all([
+        apiClient.post('/api/auth/login', payload),
+        minLoadingTime,
+      ]);
 
       if (response && response.success) {
+        this.playSuccessAudio();
+        this.setButtonState('success', 'Verified');
         toast.show(response.message || 'Login successful! Redirecting...', 'success');
-        const redirectUrl = response.data?.redirect_url || '/dashboard/';
+        const redirectUrl = response.data?.redirect_url || response.data?.redirect || './frontend/pages/dashboard/';
         setTimeout(() => {
           window.location.href = redirectUrl;
-        }, 600);
+        }, 1400);
       } else {
-        const errorMsg = response?.error || 'Invalid credentials. Please verify your PIN.';
+        this.setButtonState('default');
+        const errorMsg = response?.message || response?.error || 'Invalid credentials. Please verify your PIN.';
         toast.show(errorMsg, 'error');
         this.pinInput?.shake();
       }
     } catch (err) {
+      this.setButtonState('default');
       toast.show(err.message || 'An error occurred during login. Please try again.', 'error');
       this.pinInput?.shake();
-    } finally {
-      this.setLoading(false);
     }
   }
   // END OF FUNCTION: handleLogin
 
   /**
-   * START OF FUNCTION: setLoading
-   * Purpose: Toggles submit button loading state and spinner
+   * START OF FUNCTION: setButtonState
+   * Purpose: Updates submit button with Flowbite loading spinner, success checkmark, or failure cross with smooth colors
    */
-  setLoading(isLoading) {
-    this.isSubmitting = isLoading;
+  setButtonState(state = 'default', text = '') {
     if (!this.submitBtn) return;
 
-    if (isLoading) {
+    // Apply color-filled background & border transitions via Animations module
+    Animations.animateButtonFeedback(this.submitBtn, state);
+
+    if (state === 'loading') {
+      this.isSubmitting = true;
       this.submitBtn.disabled = true;
       this.submitBtn.innerHTML = `
-        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span>Signing in...</span>
+        <div role="status" class="inline-flex items-center justify-center gap-2.5 transition-all duration-300">
+          <svg aria-hidden="true" class="w-5 h-5 text-emerald-200/50 animate-spin fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+          </svg>
+          <span class="font-bold tracking-wide">Signing In...</span>
+        </div>
       `;
-      this.submitBtn.classList.add('opacity-75');
+    } else if (state === 'success') {
+      this.isSubmitting = true;
+      this.submitBtn.disabled = true;
+      this.submitBtn.innerHTML = `
+        <div class="inline-flex items-center justify-center gap-2 text-white transition-all duration-300">
+          <svg class="w-6 h-6 shrink-0 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+          <span class="font-bold tracking-wide">${text || 'Verified'}</span>
+        </div>
+      `;
+    } else if (state === 'error') {
+      this.isSubmitting = false;
+      this.submitBtn.disabled = false;
+      this.submitBtn.innerHTML = `
+        <div class="inline-flex items-center justify-center gap-2 text-white transition-all duration-300">
+          <svg class="w-6 h-6 shrink-0 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-bold tracking-wide text-white">${text || 'Invalid PIN'}</span>
+        </div>
+      `;
     } else {
+      this.isSubmitting = false;
       this.submitBtn.disabled = false;
       this.submitBtn.innerHTML = `<span>Sign In</span>`;
-      this.submitBtn.classList.remove('opacity-75');
     }
   }
+
+  /**
+   * START OF FUNCTION: setLoading
+   * Purpose: Backwards compatibility wrapper calling setButtonState
+   */
+  setLoading(isLoading) {
+    this.setButtonState(isLoading ? 'loading' : 'default');
+  }
   // END OF FUNCTION: setLoading
+
+  /**
+   * START OF FUNCTION: playSuccessAudio
+   * Purpose: Plays success login audio chime at 100% volume
+   */
+  playSuccessAudio() {
+    try {
+      const baseUrl = apiClient.getBaseUrl ? apiClient.getBaseUrl() : '';
+      const audioPath = `${baseUrl}/frontend/src/public/audio/login/login.mp3`;
+      const audio = new Audio(audioPath);
+      audio.volume = 1.0; // 100% volume
+      audio.play().catch(() => {
+        // Fallback for strict browser autoplay permissions
+      });
+    } catch (e) {
+      // Graceful fallback if audio device not available
+    }
+  }
+  // END OF FUNCTION: playSuccessAudio
 
   /**
    * START OF FUNCTION: bindLogoutButtons
@@ -310,14 +372,23 @@ export class AuthController {
     logoutBtns.forEach((btn) => {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
+        btn.disabled = true;
+
+        // Resolve absolute project root URL (e.g. /DOLE-Livelihood/ or /)
+        const baseUrl = apiClient.getBaseUrl ? apiClient.getBaseUrl() : '';
+        const targetUrl = baseUrl ? `${baseUrl}/` : '/';
+
         try {
-          await apiClient.post('/api/auth/logout', {});
+          const res = await apiClient.post('/api/auth/logout', {});
           toast.show('Logged out successfully.', 'info');
+          const redirect = res?.data?.redirect_url || res?.data?.redirect || targetUrl;
           setTimeout(() => {
-            window.location.href = '/';
+            window.location.href = redirect;
           }, 400);
         } catch (err) {
-          window.location.href = '/';
+          setTimeout(() => {
+            window.location.href = targetUrl;
+          }, 400);
         }
       });
     });

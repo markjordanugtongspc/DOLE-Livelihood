@@ -3,10 +3,6 @@
  * Purpose: Application entry point bundling CSS, Flowbite, ApexCharts, and OOP page controllers
  */
 
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
-import '@fontsource/poppins/600.css';
-import '@fontsource/poppins/700.css';
 import '../css/app.css';
 import 'flowbite';
 
@@ -21,13 +17,31 @@ import { DrawerManager } from './modules/drawer.js';
 import { SidebarManager } from './modules/sidebar.js';
 import { charts } from './modules/charts.js';
 
+// START OF FUNCTION: ensureFavicon
+// Purpose: Dynamically guarantees favicon link tags exist and point to valid favicon.png
+function ensureFavicon() {
+  const existingIcon = document.querySelector("link[rel*='icon']");
+  if (!existingIcon) {
+    const link = document.createElement('link');
+    link.type = 'image/png';
+    link.rel = 'shortcut icon';
+    link.href = `${window.location.origin}/DOLE-Livelihood/frontend/src/public/images/icons/favicon.png`;
+    document.head.appendChild(link);
+  }
+}
+// END OF FUNCTION: ensureFavicon
+
 // START OF FUNCTION: initApp
 // Purpose: Discovers active page from data-page attribute and initializes respective modules
 function initApp() {
-  const page = document.body.getAttribute('data-page') || 'login';
+  ensureFavicon();
+  const pageRoot = document.querySelector('[data-page]');
+  const page = pageRoot ? pageRoot.getAttribute('data-page') : (document.body.getAttribute('data-page') || 'login');
 
-  // Initialize universal modules
-  modals.init();
+  // Initialize universal modules only when matching elements exist in DOM
+  if (document.getElementById('app-modal') || document.querySelector('[data-modal-target]')) {
+    modals.init();
+  }
 
   // Expose global debug / helper registry
   window.dilp = {
@@ -48,51 +62,60 @@ function initApp() {
 // START OF FUNCTION: initLoginPage
 // Purpose: Sets up PIN keypad, login carousel, OTP controls, and login submission
 function initLoginPage() {
-  const carousel = new LoginCarousel('login-hero-carousel').init();
-  const drawer = new DrawerManager('app-drawer').init();
-  const otp = new OtpController().init();
+  if (document.getElementById('login-hero-carousel')) {
+    window.dilp.carousel = new LoginCarousel('login-hero-carousel').init();
+  }
+  if (document.getElementById('app-drawer')) {
+    window.dilp.drawer = new DrawerManager('app-drawer').init();
+  }
+  if (document.getElementById('login-form-otp-group')) {
+    window.dilp.otp = new OtpController().init();
+  }
 
-  const pin = new PinInput({
-    containerId: 'pin-container',
-    hiddenInputId: 'login-form-pin-input',
-    dotsContainerId: 'pin-dots',
-    keypadId: 'pin-keypad',
-    minLength: 4,
-    maxLength: 6,
-    onComplete: (pinValue) => {
-      document.getElementById('login-form-submit-btn')?.focus();
-    }
-  }).init();
+  const pinGroup = document.getElementById('login-form-pin-group');
+  let pin = null;
+  if (pinGroup) {
+    pin = new PinInput({
+      containerId: 'login-form-pin-group',
+      hiddenInputId: 'login-form-pin-input',
+      dotsContainerId: 'pin-dots',
+      minLength: 4,
+      maxLength: 6,
+      onComplete: () => {
+        document.getElementById('login-form-submit-btn')?.focus();
+      }
+    }).init();
+    window.dilp.pin = pin;
+  }
 
-  const auth = new AuthController({
-    formId: 'login-form',
-    submitBtnId: 'login-form-submit-btn',
-    pinInput: pin
-  }).init();
-
-  window.dilp.carousel = carousel;
-  window.dilp.drawer = drawer;
-  window.dilp.pin = pin;
-  window.dilp.otp = otp;
-  window.dilp.auth = auth;
+  if (document.getElementById('login-form')) {
+    window.dilp.auth = new AuthController({
+      formId: 'login-form',
+      submitBtnId: 'login-form-submit-btn',
+      pinInput: pin
+    }).init();
+  }
 }
 // END OF FUNCTION: initLoginPage
 
 // START OF FUNCTION: initDashboardPage
 // Purpose: Sets up expandable sidebar, ApexCharts, and dashboard actions
 function initDashboardPage() {
-  const sidebar = new SidebarManager().init();
-  const auth = new AuthController().init();
-  const drawer = new DrawerManager('app-drawer').init();
+  if (document.getElementById('drawer-navigation')) {
+    window.dilp.sidebar = new SidebarManager().init();
+  }
+  window.dilp.auth = new AuthController().init();
+
+  if (document.getElementById('app-drawer')) {
+    window.dilp.drawer = new DrawerManager('app-drawer').init();
+  }
 
   // Initialize charts after DOM layout settles
-  setTimeout(() => {
-    charts.init();
-  }, 100);
-
-  window.dilp.sidebar = sidebar;
-  window.dilp.auth = auth;
-  window.dilp.drawer = drawer;
+  if (document.getElementById('dashboard-charts-container') || document.getElementById('chart-beneficiaries-trend')) {
+    setTimeout(() => {
+      charts.init();
+    }, 100);
+  }
 }
 // END OF FUNCTION: initDashboardPage
 

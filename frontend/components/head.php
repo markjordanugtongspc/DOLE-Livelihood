@@ -15,8 +15,16 @@ $appVersion = $packageJson['version'] ?? '1.0.0';
 
 <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
 
+<!-- Google Fonts (Poppins) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="<?= Vite::asset('frontend/src/public/images/icons/favicon.png') ?>">
+<link rel="icon" type="image/png" sizes="32x32" href="<?= Vite::asset('frontend/src/public/images/icons/favicon.png') ?>">
+<link rel="icon" type="image/png" sizes="16x16" href="<?= Vite::asset('frontend/src/public/images/icons/favicon.png') ?>">
+<link rel="shortcut icon" type="image/png" href="<?= Vite::asset('frontend/src/public/images/icons/favicon.png') ?>">
+<link rel="apple-touch-icon" href="<?= Vite::asset('frontend/src/public/images/icons/favicon.png') ?>">
 
 <!-- Vite Compiled / Dev Assets -->
 <?= Vite::tags('frontend/src/js/main.js') ?>

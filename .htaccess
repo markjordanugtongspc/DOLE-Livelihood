@@ -6,21 +6,16 @@ Options +FollowSymLinks
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
 
     # Block access to hidden files and directories (starting with a dot)
     RewriteRule (^|/)\.(?!well-known/) - [F]
 
-    # Block direct access to sensitive directories
-    RewriteRule ^(config|backend|database|storage|tests|scripts) - [F,L]
-
-    # Allow direct access to existing files and directories in public/dist
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^ - [L]
-
-    # Route /api/* to backend API front controller
+    # Route /api/* to backend API front controller (must be before backend blocking)
     RewriteRule ^api(/.*)?$ backend/api/index.php [QSA,L]
+
+    # Block direct access to sensitive directories (except backend/api)
+    RewriteRule ^(config|database|storage|tests|scripts) - [F,L]
+    RewriteRule ^backend/(?!api) - [F,L]
 
     # Route /dashboard/ to frontend dashboard page
     RewriteRule ^dashboard/?$ frontend/pages/dashboard/index.php [QSA,L]

@@ -33,14 +33,12 @@ export default defineConfig(({ command }) => ({
     },
   },
   server: {
-    host: '0.0.0.0',
+    host: true,
     port: 5173,
     strictPort: true,
     cors: true,
-    origin: 'http://localhost:5173',
     hmr: {
-      host: 'localhost',
-      port: 5173,
+      clientPort: 5173,
     },
     watch: {
       // Use polling if Windows file system events are missed

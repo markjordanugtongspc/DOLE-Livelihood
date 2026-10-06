@@ -49,6 +49,9 @@ class Router
     /* START: dispatch — matches incoming request and executes the route handler */
     public static function dispatch(string $method, string $uri): void
     {
+        // Strip project base directory if running in Laragon/Apache subfolder (e.g. /DOLE-Livelihood)
+        $uri = preg_replace('#^/[^/]+(?=/api)#i', '', $uri);
+
         // Strip /api prefix if present
         if (str_starts_with($uri, '/api')) {
             $uri = substr($uri, 4);

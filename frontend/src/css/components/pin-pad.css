@@ -61,4 +61,17 @@
   color: var(--color-ink-400);
   margin-top: -2px;
 }
+
+@keyframes pinCursorBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.pin-cursor-blink {
+  animation: pinCursorBlink 1s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
 /* END: PinPadStyles */

@@ -69,10 +69,70 @@ export default class Animations {
     }
   }
   /* END: play */
+  /* START: shakePinSlots — applies shake animation and highlighted red border to PIN dot slots */
+  static shakePinSlots(container) {
+    if (!container) return;
+
+    container.classList.remove('animate-shake');
+    void container.offsetWidth; // Force reflow
+    container.classList.add('animate-shake');
+
+    const slots = container.querySelectorAll('[data-slot-index]');
+    slots.forEach(slot => {
+      slot.classList.remove('border-emerald-600', 'bg-emerald-50/50', 'border-slate-300', 'border-slate-400', 'ring-emerald-500/20');
+      slot.classList.add('border-red-600', 'bg-red-50', 'ring-4', 'ring-red-400/30', 'border-2');
+
+      // Make inner dots red
+      const innerDot = slot.querySelector('span.rounded-full');
+      if (innerDot) {
+        innerDot.classList.remove('bg-emerald-800', 'bg-emerald-600');
+        innerDot.classList.add('bg-red-600');
+      }
+
+      // Make inner text digits red
+      const innerText = slot.querySelector('span:not(.rounded-full)');
+      if (innerText) {
+        innerText.classList.remove('text-emerald-950', 'text-emerald-800');
+        innerText.classList.add('text-red-600');
+      }
+    });
+
+    setTimeout(() => {
+      container.classList.remove('animate-shake');
+      slots.forEach(slot => {
+        slot.classList.remove('border-red-600', 'bg-red-50', 'ring-4', 'ring-red-400/30');
+      });
+    }, 800);
+  }
+  /* END: shakePinSlots */
+
+  /* START: animateButtonFeedback — applies animated colored states to buttons */
+  static animateButtonFeedback(button, state = 'default') {
+    if (!button) return;
+
+    // Remove previous dynamic state styling classes
+    button.classList.remove(
+      'bg-emerald-600', 'bg-emerald-700', 'bg-emerald-800',
+      'bg-red-600', 'bg-red-700', 'bg-rose-600', 'bg-rose-700',
+      'border-emerald-600', 'border-emerald-700', 'border-red-600', 'border-red-700', 'border-rose-600', 'border-rose-700',
+      'text-white', 'text-red-100', 'text-rose-100', 'hover:bg-transparent', 'hover:text-emerald-700'
+    );
+
+    if (state === 'loading') {
+      button.classList.add('bg-emerald-800', 'border-emerald-800', 'text-white');
+    } else if (state === 'success') {
+      button.classList.add('bg-emerald-600', 'border-emerald-600', 'text-white');
+    } else {
+      // Default rest state on both default and error
+      button.classList.add('bg-emerald-700', 'border-emerald-700', 'text-white', 'hover:bg-transparent', 'hover:text-emerald-700');
+    }
+  }
+  /* END: animateButtonFeedback */
 }
 /* END: Animations */
 
 export const shakeElement = (el) => Animations.shake(el);
+export const shakePinSlotsElement = (el) => Animations.shakePinSlots(el);
 export const setButtonLoading = (btn, isLoading, text) => Animations.setLoading(btn, isLoading, text);
 export const slideLeftElement = (el, duration) => Animations.slideLeft(el, duration);
 export const slideRightElement = (el, duration) => Animations.slideRight(el, duration);

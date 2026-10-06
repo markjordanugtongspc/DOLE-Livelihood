@@ -7,8 +7,22 @@ export default class ApiClient {
   }
   /* END: getCsrf */
 
+  /* START: getBaseUrl — resolves base subfolder path from current location */
+  static getBaseUrl() {
+    const path = window.location.pathname;
+    const match = path.match(/^\/([^/]+)/);
+    if (match && (match[1].toLowerCase().includes('livelihood') || match[1] === 'DOLE-Livelihood')) {
+      return '/' + match[1];
+    }
+    return '';
+  }
+  /* END: getBaseUrl */
+
   /* START: request — core fetch method handling JSON and headers */
   static async request(url, options = {}) {
+    const baseUrl = this.getBaseUrl();
+    const finalUrl = url.startsWith('/api') ? `${baseUrl}${url}` : url;
+
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -24,7 +38,7 @@ export default class ApiClient {
     };
 
     try {
-      const response = await fetch(url, config);
+      const response = await fetch(finalUrl, config);
       const data = await response.json().catch(() => null);
 
       if (!response.ok) {

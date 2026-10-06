@@ -35,9 +35,12 @@ class AuthController extends BaseController
             return;
         }
 
+        $redirectUrl = './frontend/pages/dashboard/';
+
         Response::json(true, $result['message'], [
-            'redirect' => $result['redirect'],
-            'user'     => $result['user']
+            'redirect'     => $redirectUrl,
+            'redirect_url' => $redirectUrl,
+            'user'         => $result['user']
         ], null, 200);
     }
     /* END: login */
@@ -46,7 +49,12 @@ class AuthController extends BaseController
     public function logout(): void
     {
         AuthService::logout();
-        Response::success('Signed out successfully', ['redirect' => '/']);
+        $base = \App\core\Vite::getBaseDir();
+        $redirectUrl = $base !== '' ? $base . '/' : '/';
+        Response::success('Signed out successfully', [
+            'redirect'     => $redirectUrl,
+            'redirect_url' => $redirectUrl,
+        ]);
     }
     /* END: logout */
 

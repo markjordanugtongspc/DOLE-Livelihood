@@ -3,9 +3,9 @@
  * Purpose: Interactive PIN keypad controller handling on-screen keys, physical typing, and dot slots
  */
 
-import { shakeElement } from './animations.js';
+import { shakePinSlotsElement } from './animations.js';
 
-// START OF CLASS: PinInput - Manages numeric PIN entry, visual slots, and events
+// START OF CLASS: PinInput - Manages numeric PIN direct keyboard entry, visual slots, and events
 export class PinInput {
   /**
    * START OF FUNCTION: constructor
@@ -15,7 +15,6 @@ export class PinInput {
     this.containerId = options.containerId || 'pin-container';
     this.hiddenInputId = options.hiddenInputId || 'login-form-pin-input';
     this.dotsContainerId = options.dotsContainerId || 'pin-dots';
-    this.keypadId = options.keypadId || 'pin-keypad';
     this.minLength = options.minLength || 4;
     this.maxLength = options.maxLength || 6;
     this.onComplete = options.onComplete || null;
@@ -24,32 +23,39 @@ export class PinInput {
     this.container = document.getElementById(this.containerId);
     this.hiddenInput = document.getElementById(this.hiddenInputId);
     this.dotsContainer = document.getElementById(this.dotsContainerId);
-    this.keypad = document.getElementById(this.keypadId);
     this.toggleVisBtn = document.getElementById('pin-toggle-visibility-btn');
+    this.clearBtn = document.getElementById('pin-clear-btn');
 
     this.pin = '';
     this.isVisible = false;
+    this.isBound = false;
   }
   // END OF FUNCTION: constructor
 
   /**
    * START OF FUNCTION: init
-   * Purpose: Sets up initial slots and binds keypad and keyboard event listeners
+   * Purpose: Sets up initial slots and binds keyboard and focus listeners
    */
   init() {
     this.dotsContainer = document.getElementById(this.dotsContainerId);
-    this.keypad = document.getElementById(this.keypadId);
     this.hiddenInput = document.getElementById(this.hiddenInputId);
     this.toggleVisBtn = document.getElementById('pin-toggle-visibility-btn');
+    this.clearBtn = document.getElementById('pin-clear-btn');
 
     if (!this.dotsContainer) {
       return this;
     }
 
     this.renderSlots();
-    this.bindKeypad();
-    this.bindKeyboard();
-    this.bindVisibilityToggle();
+
+    if (!this.isBound) {
+      this.bindKeyboard();
+      this.bindVisibilityToggle();
+      this.bindClearButton();
+      this.bindContainerClick();
+      this.isBound = true;
+    }
+
     return this;
   }
   // END OF FUNCTION: init
@@ -66,7 +72,7 @@ export class PinInput {
       const slot = document.createElement('div');
       slot.id = `pin-dot-slot-${i}`;
       slot.setAttribute('data-slot-index', i.toString());
-      slot.className = 'flex-1 h-12 sm:h-13 flex items-center justify-center border-2 border-slate-300 bg-white text-lg font-bold text-slate-900 transition-all duration-150 shadow-xs';
+      slot.className = 'flex-1 h-14 sm:h-16 flex items-center justify-center rounded-xl border-2 border-slate-300 bg-white text-xl font-extrabold text-slate-900 transition-all duration-200 shadow-xs select-none';
       slot.setAttribute('aria-label', `Digit slot ${i + 1}`);
       this.dotsContainer.appendChild(slot);
     }
@@ -84,17 +90,22 @@ export class PinInput {
 
     slots.forEach((slot, index) => {
       if (index < this.pin.length) {
-        slot.classList.remove('border-slate-300', 'bg-white');
-        slot.classList.add('border-slate-900', 'bg-slate-50', 'scale-105');
+        slot.classList.remove('border-slate-300', 'bg-white', 'border-dashed');
+        slot.classList.add('border-emerald-600', 'bg-emerald-50/50', 'scale-105', 'shadow-sm');
 
         if (this.isVisible) {
-          slot.innerHTML = `<span class="text-slate-950 font-black text-xl">${this.pin[index]}</span>`;
+          slot.innerHTML = `<span class="text-emerald-950 font-black text-2xl animate-fade-in">${this.pin[index]}</span>`;
         } else {
-          slot.innerHTML = '<span class="inline-block w-4 h-4 rounded-full bg-slate-950 shadow-xs"></span>';
+          slot.innerHTML = '<span class="inline-block w-4 h-4 rounded-full bg-emerald-800 shadow-xs animate-scale-up"></span>';
         }
+      } else if (index === this.pin.length) {
+        // Active next slot indicator with standard blinking cursor
+        slot.classList.remove('border-emerald-600', 'bg-emerald-50/50', 'scale-105', 'shadow-sm');
+        slot.classList.add('border-slate-400', 'bg-white', 'ring-2', 'ring-emerald-500/20');
+        slot.innerHTML = '<span class="pin-cursor-blink inline-block w-1.5 h-6 bg-emerald-600 rounded-full"></span>';
       } else {
-        slot.classList.remove('border-slate-900', 'bg-slate-50', 'scale-105');
-        slot.classList.add('border-slate-300', 'bg-white');
+        slot.classList.remove('border-emerald-600', 'bg-emerald-50/50', 'scale-105', 'shadow-sm', 'border-slate-400', 'ring-2', 'ring-emerald-500/20');
+        slot.classList.add('border-slate-200', 'bg-white');
         slot.innerHTML = '';
       }
     });
@@ -167,40 +178,17 @@ export class PinInput {
 
   /**
    * START OF FUNCTION: shake
-   * Purpose: Triggers visual shake animation on error and clears PIN
+   * Purpose: Triggers visual shake animation with red highlight on error and clears PIN after animation
    */
   shake() {
     if (this.dotsContainer) {
-      shakeElement(this.dotsContainer);
+      shakePinSlotsElement(this.dotsContainer);
     }
-    this.clear();
+    setTimeout(() => {
+      this.clear();
+    }, 800);
   }
   // END OF FUNCTION: shake
-
-  /**
-   * START OF FUNCTION: bindKeypad
-   * Purpose: Attaches click listeners to on-screen keypad buttons
-   */
-  bindKeypad() {
-    if (!this.keypad) return;
-
-    this.keypad.addEventListener('click', (e) => {
-      const button = e.target.closest('button[data-key], button[data-action]');
-      if (!button) return;
-
-      const key = button.getAttribute('data-key');
-      const action = button.getAttribute('data-action');
-
-      if (key !== null) {
-        this.appendDigit(key);
-      } else if (action === 'backspace') {
-        this.backspace();
-      } else if (action === 'clear') {
-        this.clear();
-      }
-    });
-  }
-  // END OF FUNCTION: bindKeypad
 
   /**
    * START OF FUNCTION: bindKeyboard
@@ -210,6 +198,12 @@ export class PinInput {
     document.addEventListener('keydown', (e) => {
       // Don't capture when typing inside another active input (like phone input)
       if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.id !== this.hiddenInputId) {
+        return;
+      }
+
+      // Check if login PIN view is currently visible
+      const pinView = document.getElementById('login-view-pin');
+      if (pinView && pinView.classList.contains('hidden')) {
         return;
       }
 
@@ -234,12 +228,42 @@ export class PinInput {
     this.toggleVisBtn.addEventListener('click', (e) => {
       e.preventDefault();
       this.isVisible = !this.isVisible;
+      const toggleText = document.getElementById('pin-toggle-text');
+      if (toggleText) {
+        toggleText.textContent = this.isVisible ? 'Mask Digits' : 'Show Digits';
+      }
       this.updateSlots();
       this.toggleVisBtn.setAttribute('aria-pressed', this.isVisible ? 'true' : 'false');
     });
   }
   // END OF FUNCTION: bindVisibilityToggle
+
+  /**
+   * START OF FUNCTION: bindClearButton
+   * Purpose: Binds quick Clear button
+   */
+  bindClearButton() {
+    if (!this.clearBtn) return;
+    this.clearBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.clear();
+    });
+  }
+  // END OF FUNCTION: bindClearButton
+
+  /**
+   * START OF FUNCTION: bindContainerClick
+   * Purpose: Focuses container when user clicks on slots
+   */
+  bindContainerClick() {
+    if (!this.dotsContainer) return;
+    this.dotsContainer.addEventListener('click', () => {
+      this.dotsContainer.focus();
+    });
+  }
+  // END OF FUNCTION: bindContainerClick
 }
+// END OF CLASS: PinInput
 // END OF CLASS: PinInput
 
 /**

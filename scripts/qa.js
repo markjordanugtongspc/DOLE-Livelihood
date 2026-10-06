@@ -7,17 +7,40 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 
+// START OF FUNCTION: getPhpBinary
+// Purpose: Resolves portable or system PHP binary executable
+function getPhpBinary() {
+  const laragonPhp = 'C:\\laragon\\bin\\php\\php-8.3.33-Win32-vs16-x64\\php.exe';
+  if (fs.existsSync(laragonPhp)) {
+    return `"${laragonPhp}"`;
+  }
+  return 'php';
+}
+// END OF FUNCTION: getPhpBinary
+
+// START OF FUNCTION: getGitBinary
+// Purpose: Resolves portable or system Git binary executable
+function getGitBinary() {
+  const portableGit = 'C:\\Users\\lace\\Desktop\\Jordan [FILES]\\Programs\\PortableGit\\cmd\\git.exe';
+  if (fs.existsSync(portableGit)) {
+    return `"${portableGit}"`;
+  }
+  return 'git';
+}
+// END OF FUNCTION: getGitBinary
+
 // START OF FUNCTION: checkRemoteGit
 // Purpose: Checks remote git updates per User Rule #7
 export function checkRemoteGit() {
   console.log('[QA] 1/5 Checking remote git updates (Rule #7)...');
+  const gitBin = getGitBinary();
   try {
-    const remotes = execSync('git remote', { encoding: 'utf-8' }).trim();
+    const remotes = execSync(`${gitBin} remote`, { encoding: 'utf-8' }).trim();
     if (!remotes) {
       console.log('     ✓ No remote git configured yet. Skipping fetch.');
       return true;
     }
-    execSync('git fetch --dry-run', { stdio: 'pipe' });
+    execSync(`${gitBin} fetch --dry-run`, { stdio: 'pipe' });
     console.log('     ✓ Remote git checked.');
     return true;
   } catch (err) {
@@ -32,6 +55,7 @@ export function checkRemoteGit() {
 export function checkPhpSyntax(dir = '.') {
   console.log('[QA] 2/5 Running PHP syntax lint (php -l)...');
   const phpFiles = [];
+  const phpBin = getPhpBinary();
 
   function scan(currentDir) {
     const entries = fs.readdirSync(currentDir, { withFileTypes: true });
@@ -51,7 +75,7 @@ export function checkPhpSyntax(dir = '.') {
   let errors = 0;
   for (const file of phpFiles) {
     try {
-      execSync(`php -l "${file}"`, { stdio: 'pipe' });
+      execSync(`${phpBin} -l "${file}"`, { stdio: 'pipe' });
     } catch (err) {
       console.error(`     ✗ Syntax error in: ${file}`);
       errors++;

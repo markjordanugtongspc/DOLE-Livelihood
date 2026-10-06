@@ -10,7 +10,7 @@ export class SidebarManager {
    * Purpose: Initializes DOM references and stored collapse state
    */
   constructor(options = {}) {
-    this.sidebarId = options.sidebarId || 'dashboard-sidebar';
+    this.sidebarId = options.sidebarId || 'drawer-navigation';
     this.contentId = options.contentId || 'dashboard-main-content';
     this.toggleBtnId = options.toggleBtnId || 'sidebar-toggle-btn';
     this.mobileToggleBtnId = options.mobileToggleBtnId || 'sidebar-mobile-toggle-btn';
@@ -74,6 +74,9 @@ export class SidebarManager {
     this.isCollapsed = !this.isCollapsed;
     localStorage.setItem(this.storageKey, this.isCollapsed ? 'true' : 'false');
     this.applyState();
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 320);
   }
   // END OF FUNCTION: toggleCollapse
 
@@ -85,30 +88,68 @@ export class SidebarManager {
     if (!this.sidebar) return;
 
     const labelElements = this.sidebar.querySelectorAll('[data-sidebar-label]');
+    const collapseIcons = this.sidebar.querySelectorAll('.sidebar-icon-collapse');
+    const expandIcons = this.sidebar.querySelectorAll('.sidebar-icon-expand');
+    const brandContainer = this.sidebar.querySelector('#sidebar-brand-wrapper');
+    const brandLink = this.sidebar.querySelector('#sidebar-brand-link');
 
     if (this.isCollapsed) {
-      this.sidebar.classList.remove('lg:w-64');
+      this.sidebar.classList.remove('lg:w-72');
       this.sidebar.classList.add('lg:w-20');
 
+      if (brandContainer) {
+        brandContainer.classList.add('justify-center');
+      }
+      if (brandLink) {
+        brandLink.classList.add('w-full', 'justify-center');
+      }
+
       if (this.content) {
-        this.content.classList.remove('lg:ml-64');
+        this.content.classList.remove('lg:ml-72');
         this.content.classList.add('lg:ml-20');
       }
 
       labelElements.forEach((el) => {
         el.classList.add('lg:hidden');
       });
+
+      collapseIcons.forEach((el) => {
+        el.classList.add('hidden');
+        el.classList.remove('inline-flex');
+      });
+
+      expandIcons.forEach((el) => {
+        el.classList.remove('hidden');
+        el.classList.add('inline-flex');
+      });
     } else {
       this.sidebar.classList.remove('lg:w-20');
-      this.sidebar.classList.add('lg:w-64');
+      this.sidebar.classList.add('lg:w-72');
+
+      if (brandContainer) {
+        brandContainer.classList.remove('justify-center');
+      }
+      if (brandLink) {
+        brandLink.classList.remove('w-full', 'justify-center');
+      }
 
       if (this.content) {
         this.content.classList.remove('lg:ml-20');
-        this.content.classList.add('lg:ml-64');
+        this.content.classList.add('lg:ml-72');
       }
 
       labelElements.forEach((el) => {
         el.classList.remove('lg:hidden');
+      });
+
+      collapseIcons.forEach((el) => {
+        el.classList.remove('hidden');
+        el.classList.add('inline-flex');
+      });
+
+      expandIcons.forEach((el) => {
+        el.classList.add('hidden');
+        el.classList.remove('inline-flex');
       });
     }
   }

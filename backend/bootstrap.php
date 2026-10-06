@@ -8,6 +8,24 @@ if (file_exists($rootPath . '/vendor/autoload.php')) {
     require_once $rootPath . '/vendor/autoload.php';
 }
 
+// Fallback PSR-4 autoloader for App\ namespace
+spl_autoload_register(function ($class) use ($rootPath) {
+    $prefix = 'App\\';
+    $baseDir = $rootPath . '/backend/';
+    
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+    
+    $relativeClass = substr($class, $len);
+    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+    
+    if (file_exists($file)) {
+        require_once $file;
+    }
+});
+
 // Load .env configuration
 if (class_exists(\Dotenv\Dotenv::class)) {
     if (file_exists($rootPath . '/.env')) {

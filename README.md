@@ -27,7 +27,7 @@ The DILP Management System is an enterprise-grade government portal designed to 
 - **Frontend Core:** Vite 8.3+ bundling with vanilla JavaScript OOP modules.
 - **Styling:** Tailwind CSS v4.2+ featuring responsive layout utilities, semantic color tokens (Forest Green `#237D2C`, Sunflower `#F29C38`, Deep Slate, Paper White), and Acer laptop (1080p @ 125% DPI scale / 1366x768 / 1536x864) optimizations.
 - **UI Components:** Flowbite v4.0.2 (Drawers, Modals via `modals.js`, Dropdowns, Tabs, Carousels).
-- **Data Visualization:** ApexCharts 3.46.0 (Monthly beneficiaries trend area chart and livelihood project categories donut chart).
+- **Data Visualization:** ApexCharts 3.46.0 (Monthly proponent trend area chart and livelihood project categories donut chart).
 
 ---
 

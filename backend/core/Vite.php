@@ -7,9 +7,16 @@ class Vite
     /* START: getBaseDir — calculates URL base folder dynamically for Laragon or subfolder hosting */
     public static function getBaseDir(): string
     {
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-        $dir = str_replace('\\', '/', dirname($scriptName));
-        if ($dir === '/' || $dir === '.') {
+        $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+        $projectRootName = basename(dirname(__DIR__, 2)); // e.g. 'DOLE-Livelihood'
+        
+        $pos = strpos($scriptName, '/' . $projectRootName);
+        if ($pos !== false) {
+            return substr($scriptName, 0, $pos + strlen('/' . $projectRootName));
+        }
+
+        $dir = dirname($scriptName);
+        if ($dir === '/' || $dir === '.' || $dir === '\\') {
             return '';
         }
         return rtrim($dir, '/');

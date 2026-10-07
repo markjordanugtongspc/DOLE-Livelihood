@@ -20,6 +20,9 @@ Options +FollowSymLinks
     # Route /dashboard/ to frontend dashboard page
     RewriteRule ^dashboard/?$ frontend/pages/dashboard/index.php [QSA,L]
 
+    # Route /proponent/ to frontend proponent page
+    RewriteRule ^proponent/?$ frontend/pages/proponent/index.php [QSA,L]
+
     # Default fallback to index.php
     RewriteRule ^$ index.php [L]
 </IfModule>

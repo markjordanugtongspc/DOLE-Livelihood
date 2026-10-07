@@ -1,7 +1,4 @@
-/**
- * START OF FILE: frontend/src/js/modules/sidebar.js
- * Purpose: Manages expandable and collapsable dashboard sidebar with localStorage persistence
- */
+import { Animations } from './animations.js';
 
 // START OF CLASS: SidebarManager - Controls desktop collapse and mobile drawer states
 export class SidebarManager {
@@ -58,6 +55,8 @@ export class SidebarManager {
       });
     }
 
+    this.bindDropdownToggles();
+
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 1024) {
         this.closeMobile();
@@ -65,6 +64,42 @@ export class SidebarManager {
     });
   }
   // END OF FUNCTION: bindEvents
+
+  /**
+   * START OF FUNCTION: bindDropdownToggles
+   * Purpose: Manages submenu accordion collapse, pop animation, and chevron SVG rotation
+   */
+  bindDropdownToggles() {
+    if (!this.sidebar) return;
+
+    const toggleButtons = this.sidebar.querySelectorAll('[data-collapse-toggle]');
+    toggleButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute('data-collapse-toggle') || btn.getAttribute('aria-controls');
+        const targetMenu = targetId ? document.getElementById(targetId) : null;
+        const chevron = btn.querySelector('svg.transition-transform') || btn.querySelector('[data-sidebar-label] svg');
+
+        if (!targetMenu) return;
+
+        const isHidden = targetMenu.classList.contains('hidden');
+        if (isHidden) {
+          Animations.toggleDropdownAccordion(targetMenu, true, 220);
+          btn.setAttribute('aria-expanded', 'true');
+          if (chevron) {
+            chevron.classList.add('rotate-180');
+          }
+        } else {
+          Animations.toggleDropdownAccordion(targetMenu, false, 200);
+          btn.setAttribute('aria-expanded', 'false');
+          if (chevron) {
+            chevron.classList.remove('rotate-180');
+          }
+        }
+      });
+    });
+  }
+  // END OF FUNCTION: bindDropdownToggles
 
   /**
    * START OF FUNCTION: toggleCollapse

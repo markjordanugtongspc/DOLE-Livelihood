@@ -13,6 +13,26 @@ export default class Animations {
   }
   /* END: shake */
 
+  /* START: animateButtonFeedback — applies smooth color & state transitions to action buttons */
+  static animateButtonFeedback(button, state = 'default') {
+    if (!button) return;
+
+    if (state === 'loading') {
+      button.classList.remove('bg-emerald-700', 'hover:bg-transparent', 'text-white', 'hover:text-emerald-700', 'bg-red-600', 'border-red-600');
+      button.classList.add('bg-emerald-800', 'border-emerald-800', 'text-white', 'cursor-wait', 'opacity-90');
+    } else if (state === 'success') {
+      button.classList.remove('bg-emerald-700', 'hover:bg-transparent', 'hover:text-emerald-700', 'bg-red-600', 'border-red-600', 'cursor-wait', 'opacity-90');
+      button.classList.add('bg-emerald-600', 'border-emerald-600', 'text-white');
+    } else if (state === 'error') {
+      button.classList.remove('bg-emerald-700', 'hover:bg-transparent', 'hover:text-emerald-700', 'cursor-wait', 'opacity-90');
+      button.classList.add('bg-red-600', 'border-red-600', 'text-white');
+    } else {
+      button.classList.remove('bg-emerald-800', 'border-emerald-800', 'bg-red-600', 'border-red-600', 'cursor-wait', 'opacity-90');
+      button.classList.add('bg-emerald-700', 'border-emerald-700', 'text-white');
+    }
+  }
+  /* END: animateButtonFeedback */
+
   /* START: setLoading — toggles loading spinner and disabled state on button */
   static setLoading(button, isLoading, loadingText = 'Processing...') {
     if (!button) return;
@@ -106,37 +126,72 @@ export default class Animations {
   }
   /* END: shakePinSlots */
 
-  /* START: animateButtonFeedback — applies animated colored states to buttons */
-  static animateButtonFeedback(button, state = 'default') {
-    if (!button) return;
+  /* START: toggleDropdownAccordion — smoothly animates dropdown opening/closing with pop effect */
+  static toggleDropdownAccordion(targetMenu, isOpening = true, duration = 220) {
+    if (!targetMenu) return;
 
-    // Remove previous dynamic state styling classes
-    button.classList.remove(
-      'bg-emerald-600', 'bg-emerald-700', 'bg-emerald-800',
-      'bg-red-600', 'bg-red-700', 'bg-rose-600', 'bg-rose-700',
-      'border-emerald-600', 'border-emerald-700', 'border-red-600', 'border-red-700', 'border-rose-600', 'border-rose-700',
-      'text-white', 'text-red-100', 'text-rose-100', 'hover:bg-transparent', 'hover:text-emerald-700'
-    );
+    if (isOpening) {
+      targetMenu.classList.remove('hidden');
+      targetMenu.style.overflow = 'hidden';
+      targetMenu.style.maxHeight = '0px';
+      targetMenu.style.opacity = '0';
+      targetMenu.style.transform = 'translateY(-6px) scale(0.97)';
+      targetMenu.style.transformOrigin = 'top center';
+      targetMenu.style.transition = `max-height ${duration}ms cubic-bezier(0.16, 1, 0.3, 1), opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1), transform ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1)`;
 
-    if (state === 'loading') {
-      button.classList.add('bg-emerald-800', 'border-emerald-800', 'text-white');
-    } else if (state === 'success') {
-      button.classList.add('bg-emerald-600', 'border-emerald-600', 'text-white');
+      // Force layout reflow
+      void targetMenu.offsetHeight;
+
+      const fullHeight = targetMenu.scrollHeight;
+      targetMenu.style.maxHeight = `${fullHeight + 10}px`;
+      targetMenu.style.opacity = '1';
+      targetMenu.style.transform = 'translateY(0) scale(1)';
+
+      setTimeout(() => {
+        targetMenu.style.maxHeight = '';
+        targetMenu.style.overflow = '';
+        targetMenu.style.transition = '';
+        targetMenu.style.transform = '';
+        targetMenu.style.transformOrigin = '';
+      }, duration + 30);
     } else {
-      // Default rest state on both default and error
-      button.classList.add('bg-emerald-700', 'border-emerald-700', 'text-white', 'hover:bg-transparent', 'hover:text-emerald-700');
+      targetMenu.style.overflow = 'hidden';
+      targetMenu.style.maxHeight = `${targetMenu.scrollHeight}px`;
+      targetMenu.style.opacity = '1';
+      targetMenu.style.transform = 'translateY(0) scale(1)';
+      targetMenu.style.transformOrigin = 'top center';
+      targetMenu.style.transition = `max-height ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+
+      // Force layout reflow
+      void targetMenu.offsetHeight;
+
+      targetMenu.style.maxHeight = '0px';
+      targetMenu.style.opacity = '0';
+      targetMenu.style.transform = 'translateY(-6px) scale(0.97)';
+
+      setTimeout(() => {
+        targetMenu.classList.add('hidden');
+        targetMenu.style.maxHeight = '';
+        targetMenu.style.opacity = '';
+        targetMenu.style.overflow = '';
+        targetMenu.style.transition = '';
+        targetMenu.style.transform = '';
+        targetMenu.style.transformOrigin = '';
+      }, duration);
     }
   }
-  /* END: animateButtonFeedback */
+  /* END: toggleDropdownAccordion */
 }
 /* END: Animations */
 
 export const shakeElement = (el) => Animations.shake(el);
 export const shakePinSlotsElement = (el) => Animations.shakePinSlots(el);
 export const setButtonLoading = (btn, isLoading, text) => Animations.setLoading(btn, isLoading, text);
+export const animateButtonFeedback = (btn, state) => Animations.animateButtonFeedback(btn, state);
 export const slideLeftElement = (el, duration) => Animations.slideLeft(el, duration);
 export const slideRightElement = (el, duration) => Animations.slideRight(el, duration);
 export const pauseAnimation = (target) => Animations.pause(target);
 export const playAnimation = (target) => Animations.play(target);
+export const toggleDropdownAccordion = (el, isOpening, duration) => Animations.toggleDropdownAccordion(el, isOpening, duration);
 export { Animations };
 

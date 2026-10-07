@@ -19,7 +19,7 @@
 - **Brand Logo Centering**:
   - Added `#sidebar-brand-wrapper` and `#sidebar-brand-link` with automated flex centering (`justify-center w-full`) in `sidebar.js` when the sidebar is in collapsed state (`w-20`), restoring left-aligned layout when expanded (`w-72`).
 - **Tree-Branch Submenu Design**:
-  - Implemented a structured tree-branch hierarchy for `#dropdown-beneficiaries`:
+  - Implemented a structured tree-branch hierarchy for `#dropdown-proponent`:
     - Vertical spine guideline (`border-l-2 border-stone-200 dark:border-slate-700/80`)
     - Horizontal branch connector lines (`w-2.5 h-0.5 bg-stone-200 dark:bg-slate-700/80`)
     - Interactive node bullets transitioning to emerald green on hover.
@@ -32,7 +32,7 @@
   - Removed static chart card markup from `frontend/pages/dashboard/index.php` and replaced with mount container `<div id="dashboard-charts-container"></div>`.
 - **OOP Hierarchy in `charts.js`**:
   - **`BaseChart` (Parent)**: Provides card shell rendering (`mountCard`), lifecycle management (`render`, `destroy`, `resize`, `update`), and container registration.
-  - **`BeneficiariesTrendChart` (Subchild 1)**: Generates 2-column card markup and renders monthly beneficiaries area chart with smooth emerald gradients and 100% responsive width.
+  - **`ProponentTrendChart` (Subchild 1)**: Generates 2-column card markup and renders monthly proponent area chart with smooth emerald gradients and 100% responsive width.
   - **`CategoryDistributionChart` (Subchild 2)**: Generates 1-column card markup and renders project categories donut chart with corrected sizing, center label metrics, and non-overlapping bottom legends.
   - **`ChartManager`**: Coordinates grid generation and lifecycle of all subchild chart instances.
 - **Responsive Auto-Redraw**:

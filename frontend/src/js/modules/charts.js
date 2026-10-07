@@ -122,14 +122,14 @@ export class BaseChart {
 }
 // END OF CLASS: BaseChart
 
-// START OF CLASS: BeneficiariesTrendChart — Subchild 1: Monthly Beneficiaries Assisted Area Chart
-export class BeneficiariesTrendChart extends BaseChart {
+// START OF CLASS: ProponentTrendChart — Subchild 1: Monthly Proponent Assisted Area Chart
+export class ProponentTrendChart extends BaseChart {
   /**
    * START OF FUNCTION: constructor
    * Purpose: Calls parent constructor with trend chart ID and custom options
    */
   constructor(options = {}) {
-    super('chart-beneficiaries-trend', options);
+    super('chart-proponent-trend', options);
   }
   // END OF FUNCTION: constructor
 
@@ -144,14 +144,14 @@ export class BeneficiariesTrendChart extends BaseChart {
 
   /**
    * START OF FUNCTION: buildCardHTML
-   * Purpose: Generates HTML structure for the 2-column Beneficiaries Trend card
+   * Purpose: Generates HTML structure for the 2-column Proponent Trend card
    */
   buildCardHTML() {
     return `
       <div id="${this.getCardId()}" class="lg:col-span-2 min-w-0 bg-stone-50 dark:bg-slate-800 p-6 rounded-2xl border border-stone-200 dark:border-slate-700 shadow-xs flex flex-col justify-between">
           <div class="flex items-center justify-between mb-4">
               <div>
-                  <h2 id="dashboard-chart-trend-title" class="text-base font-bold text-stone-900 dark:text-white">Beneficiaries Assisted (2026)</h2>
+                  <h2 id="dashboard-chart-trend-title" class="text-base font-bold text-stone-900 dark:text-white">Proponent Assisted (2026)</h2>
                   <p class="text-xs text-stone-500 dark:text-slate-400">Monthly breakdown of livelihood grants released</p>
               </div>
               <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
@@ -171,7 +171,7 @@ export class BeneficiariesTrendChart extends BaseChart {
   getChartOptions() {
     return {
       series: [{
-        name: 'Beneficiaries Assisted',
+        name: 'Proponent Assisted',
         data: [42, 65, 88, 120, 156, 189, 210]
       }],
       chart: {
@@ -228,7 +228,7 @@ export class BeneficiariesTrendChart extends BaseChart {
       tooltip: {
         theme: 'light',
         y: {
-          formatter: (val) => `${val} Beneficiaries`
+          formatter: (val) => `${val} Proponent`
         }
       },
       ...this.options
@@ -236,7 +236,7 @@ export class BeneficiariesTrendChart extends BaseChart {
   }
   // END OF FUNCTION: getChartOptions
 }
-// END OF CLASS: BeneficiariesTrendChart
+// END OF CLASS: ProponentTrendChart
 
 // START OF CLASS: CategoryDistributionChart — Subchild 2: Livelihood Project Categories Donut Chart
 export class CategoryDistributionChart extends BaseChart {
@@ -392,7 +392,7 @@ export class ChartManager {
   constructor(options = {}) {
     this.containerId = options.containerId || 'dashboard-charts-container';
     this.gridId = options.gridId || 'dashboard-charts-grid';
-    this.trendChart = new BeneficiariesTrendChart();
+    this.trendChart = new ProponentTrendChart();
     this.categoryChart = new CategoryDistributionChart();
   }
   // END OF FUNCTION: constructor

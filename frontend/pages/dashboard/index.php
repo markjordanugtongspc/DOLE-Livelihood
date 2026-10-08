@@ -84,7 +84,7 @@ require_once __DIR__ . '/../../components/head.php';
                     <!-- Medium Background SVG Watermark (Static) -->
                     <div class="absolute -right-3 -bottom-4 text-white/10 pointer-events-none select-none">
                         <svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
                         </svg>
                     </div>
 
@@ -92,7 +92,7 @@ require_once __DIR__ . '/../../components/head.php';
                     <div class="flex items-center justify-between relative z-10">
                         <div class="w-9 h-9 rounded-none bg-white/15 border border-white/20 backdrop-blur-xs flex items-center justify-center shadow-xs">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
                             </svg>
                         </div>
                         <span class="text-3xs font-mono font-bold tracking-widest text-emerald-200/70">01</span>
@@ -120,7 +120,7 @@ require_once __DIR__ . '/../../components/head.php';
                     <!-- Medium Background SVG Watermark (Static) -->
                     <div class="absolute -right-3 -bottom-4 text-white/10 pointer-events-none select-none">
                         <svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
                         </svg>
                     </div>
 
@@ -128,7 +128,7 @@ require_once __DIR__ . '/../../components/head.php';
                     <div class="flex items-center justify-between relative z-10">
                         <div class="w-9 h-9 rounded-none bg-white/15 border border-white/20 backdrop-blur-xs flex items-center justify-center shadow-xs">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
                             </svg>
                         </div>
                         <span class="text-3xs font-mono font-bold tracking-widest text-amber-200/70">02</span>
@@ -136,7 +136,7 @@ require_once __DIR__ . '/../../components/head.php';
 
                     <!-- Main Metrics -->
                     <div class="mt-4 relative z-10">
-                        <span class="block text-3xs sm:text-2xs font-extrabold uppercase tracking-wider text-amber-100/90">Active Livelihood Projects</span>
+                        <span class="block text-3xs sm:text-2xs font-extrabold uppercase tracking-wider text-amber-100/90">Total Evaluators</span>
                         <div id="dashboard-kpi-projects-val" class="text-2xl sm:text-[1.7rem] font-extrabold tracking-tight mt-0.5 whitespace-nowrap drop-shadow-xs">
                             84
                         </div>
@@ -146,77 +146,149 @@ require_once __DIR__ . '/../../components/head.php';
                     <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-xs relative z-10">
                         <span class="font-medium text-amber-100">Across Lanao del Norte</span>
                         <span class="inline-flex items-center text-3xs font-bold text-amber-100 bg-white/10 px-2 py-0.5 rounded-none">
-                            8 Completed
+                            8 Active Teams
                         </span>
                     </div>
                 </div>
 
-                <!-- KPI 3: Total Funds Disbursed (Primary Deep Scale: --color-primary-800 / --color-primary-900 / --color-primary-950) -->
-                <div id="dashboard-kpi-grants" class="relative overflow-hidden p-5 rounded-none bg-gradient-to-br from-emerald-800 via-emerald-900 to-teal-950 text-white shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 cursor-pointer">
-                    <!-- Medium Background SVG Watermark (Static) -->
-                    <div class="absolute -right-3 -bottom-4 text-white/10 pointer-events-none select-none">
-                        <svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                            <text x="3" y="19" font-size="20" font-family="Poppins, sans-serif" font-weight="bold" fill="currentColor">₱</text>
-                        </svg>
-                    </div>
-
-                    <!-- Top Bar: Glass Icon & Card Index -->
-                    <div class="flex items-center justify-between relative z-10">
-                        <div class="w-9 h-9 rounded-none bg-white/15 border border-white/20 backdrop-blur-xs flex items-center justify-center font-bold text-sm shadow-xs">
-                            ₱
-                        </div>
-                        <span class="text-3xs font-mono font-bold tracking-widest text-emerald-200/70">03</span>
-                    </div>
-
-                    <!-- Main Metrics -->
-                    <div class="mt-4 relative z-10">
-                        <span class="block text-3xs sm:text-2xs font-extrabold uppercase tracking-wider text-emerald-100/90">Total Funds Disbursed</span>
-                        <div id="dashboard-kpi-grants-val" class="text-2xl sm:text-[1.7rem] font-extrabold tracking-tight mt-0.5 whitespace-nowrap drop-shadow-xs">
-                            ₱14.85M
-                        </div>
-                    </div>
-
-                    <!-- Bottom Subtext & Status -->
-                    <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-xs relative z-10">
-                        <span class="font-medium text-emerald-100">Liquidation Rate</span>
-                        <span class="inline-flex items-center text-3xs font-bold text-emerald-100 bg-white/10 px-2 py-0.5 rounded-none">
-                            98.2% Disbursed
-                        </span>
-                    </div>
-                </div>
-
-                <!-- KPI 4: Sustainability / Success Rate (Slate Neutral Scale: --color-slate-700 / --color-slate-800 / --color-slate-900) -->
-                <div id="dashboard-kpi-success" class="relative overflow-hidden p-5 rounded-none bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 text-white shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 cursor-pointer">
-                    <!-- Medium Background SVG Watermark (Static) -->
-                    <div class="absolute -right-3 -bottom-4 text-white/10 pointer-events-none select-none">
-                        <svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <!-- KPI 3: Total Male (Refined Deep Slate/Blue Scale: from-slate-800 via-blue-900 to-indigo-950) -->
+                <div id="dashboard-kpi-male" class="relative p-5 rounded-none bg-gradient-to-br from-slate-800 via-blue-950 to-indigo-950 text-white shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 cursor-pointer">
+                    <!-- Medium Background SVG Watermark (Static: Literal Mars / Male Gender Symbol) -->
+                    <div class="absolute -right-3 -bottom-4 text-white/10 pointer-events-none select-none overflow-hidden">
+                        <svg class="w-32 h-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                            <rect width="256" height="256" fill="none"/>
+                            <circle cx="104" cy="152" r="72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                            <line x1="154.91" y1="101.09" x2="216" y2="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                            <polyline points="168 40 216 40 216 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
                         </svg>
                     </div>
 
                     <!-- Top Bar: Glass Icon & Card Index -->
                     <div class="flex items-center justify-between relative z-10">
                         <div class="w-9 h-9 rounded-none bg-white/15 border border-white/20 backdrop-blur-xs flex items-center justify-center shadow-xs">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                                <rect width="256" height="256" fill="none"/>
+                                <circle cx="104" cy="152" r="72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                                <line x1="154.91" y1="101.09" x2="216" y2="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                                <polyline points="168 40 216 40 216 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
                             </svg>
                         </div>
-                        <span class="text-3xs font-mono font-bold tracking-widest text-slate-300/70">04</span>
+                        <span class="text-3xs font-mono font-bold tracking-widest text-blue-200/70">03</span>
                     </div>
 
                     <!-- Main Metrics -->
                     <div class="mt-4 relative z-10">
-                        <span class="block text-3xs sm:text-2xs font-extrabold uppercase tracking-wider text-slate-200/90">Sustainability Rate</span>
-                        <div id="dashboard-kpi-success-val" class="text-2xl sm:text-[1.7rem] font-extrabold tracking-tight mt-0.5 whitespace-nowrap drop-shadow-xs">
-                            94.6%
+                        <span id="dashboard-kpi-male-title" class="block text-3xs sm:text-2xs font-extrabold uppercase tracking-wider text-blue-100/90 truncate">Total Male</span>
+                        <div id="dashboard-kpi-male-val" class="text-2xl sm:text-[1.7rem] font-extrabold tracking-tight mt-0.5 whitespace-nowrap drop-shadow-xs">
+                            542
                         </div>
                     </div>
 
-                    <!-- Bottom Subtext & Status -->
-                    <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-xs relative z-10">
-                        <span class="font-medium text-slate-200">Target Benchmark</span>
-                        <span class="inline-flex items-center text-3xs font-bold text-emerald-300 bg-white/10 px-2 py-0.5 rounded-none">
-                            &uarr; 3.2% Target
+                    <!-- Bottom Subtext: Dropdown on Beneficiary Share area -->
+                    <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-xs relative z-30" onclick="event.stopPropagation()">
+                        <!-- Clickable Dropdown Trigger replacing static Beneficiary Share text -->
+                        <div class="relative inline-block text-left">
+                            <button
+                                type="button"
+                                id="dashboard-kpi-male-filter-btn"
+                                data-dropdown-toggle="dashboard-kpi-male-dropdown"
+                                data-dropdown-placement="bottom-start"
+                                class="inline-flex items-center gap-1 font-medium text-blue-100 hover:text-white cursor-pointer bg-transparent border-0 p-0 transition-colors"
+                            >
+                                <span id="dashboard-kpi-male-selected-label">Total Male</span>
+                                <svg class="w-3 h-3 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div
+                                id="dashboard-kpi-male-dropdown"
+                                class="z-50 hidden my-1 text-xs list-none bg-slate-900 border border-slate-700 divide-y divide-slate-800 shadow-2xl rounded-none w-48"
+                            >
+                                <ul class="py-1 text-slate-200">
+                                    <li>
+                                        <a href="javascript:void(0)" data-filter-gender="male" data-type="all" data-label="Total Male" data-val="542" data-pct="43.4% of Total" class="block px-3 py-1.5 hover:bg-blue-900/60 font-medium">Total Male</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-filter-gender="male" data-type="sr" data-label="Total Male (SR)" data-val="128" data-pct="23.6% of Male" class="block px-3 py-1.5 hover:bg-blue-900/60 font-medium">Total Male (SR)</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-filter-gender="male" data-type="pwd" data-label="Total Male (PWD)" data-val="46" data-pct="8.5% of Male" class="block px-3 py-1.5 hover:bg-blue-900/60 font-medium">Total Male (PWD)</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <span id="dashboard-kpi-male-pct" class="inline-flex items-center text-3xs font-bold text-blue-100 bg-white/10 px-2 py-0.5 rounded-none shrink-0">
+                            43.4% of Total
+                        </span>
+                    </div>
+                </div>
+
+                <!-- KPI 4: Total Female (Refined Deep Berry/Rose Scale: from-slate-900 via-rose-950 to-pink-950) -->
+                <div id="dashboard-kpi-female" class="relative p-5 rounded-none bg-gradient-to-br from-slate-900 via-rose-950 to-pink-950 text-white shadow-md hover:shadow-xl transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 cursor-pointer">
+                    <!-- Medium Background SVG Watermark (Static: Literal Venus / Female Gender Symbol) -->
+                    <div class="absolute -right-3 -bottom-4 text-white/10 pointer-events-none select-none overflow-hidden">
+                        <svg class="w-32 h-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                            <rect width="256" height="256" fill="none"/>
+                            <circle cx="128" cy="96" r="72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                            <line x1="128" y1="168" x2="128" y2="240" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                            <line x1="88" y1="208" x2="168" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </div>
+
+                    <!-- Top Bar: Glass Icon & Card Index -->
+                    <div class="flex items-center justify-between relative z-10">
+                        <div class="w-9 h-9 rounded-none bg-white/15 border border-white/20 backdrop-blur-xs flex items-center justify-center shadow-xs">
+                            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                                <rect width="256" height="256" fill="none"/>
+                                <circle cx="128" cy="96" r="72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                                <line x1="128" y1="168" x2="128" y2="240" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                                <line x1="88" y1="208" x2="168" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                            </svg>
+                        </div>
+                        <span class="text-3xs font-mono font-bold tracking-widest text-pink-200/70">04</span>
+                    </div>
+
+                    <!-- Main Metrics -->
+                    <div class="mt-4 relative z-10">
+                        <span id="dashboard-kpi-female-title" class="block text-3xs sm:text-2xs font-extrabold uppercase tracking-wider text-pink-100/90 truncate">Total Female</span>
+                        <div id="dashboard-kpi-female-val" class="text-2xl sm:text-[1.7rem] font-extrabold tracking-tight mt-0.5 whitespace-nowrap drop-shadow-xs">
+                            706
+                        </div>
+                    </div>
+
+                    <!-- Bottom Subtext: Dropdown on Beneficiary Share area -->
+                    <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-xs relative z-30" onclick="event.stopPropagation()">
+                        <!-- Clickable Dropdown Trigger replacing static Beneficiary Share text -->
+                        <div class="relative inline-block text-left">
+                            <button
+                                type="button"
+                                id="dashboard-kpi-female-filter-btn"
+                                data-dropdown-toggle="dashboard-kpi-female-dropdown"
+                                data-dropdown-placement="bottom-start"
+                                class="inline-flex items-center gap-1 font-medium text-pink-100 hover:text-white cursor-pointer bg-transparent border-0 p-0 transition-colors"
+                            >
+                                <span id="dashboard-kpi-female-selected-label">Total Female</span>
+                                <svg class="w-3 h-3 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div
+                                id="dashboard-kpi-female-dropdown"
+                                class="z-50 hidden my-1 text-xs list-none bg-slate-900 border border-slate-700 divide-y divide-slate-800 shadow-2xl rounded-none w-52"
+                            >
+                                <ul class="py-1 text-slate-200">
+                                    <li>
+                                        <a href="javascript:void(0)" data-filter-gender="female" data-type="all" data-label="Total Female" data-val="706" data-pct="56.6% of Total" class="block px-3 py-1.5 hover:bg-rose-900/60 font-medium">Total Female</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-filter-gender="female" data-type="sr" data-label="Total Female (SR)" data-val="184" data-pct="26.1% of Female" class="block px-3 py-1.5 hover:bg-rose-900/60 font-medium">Total Female (SR)</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" data-filter-gender="female" data-type="pwd" data-label="Total Female (PWD)" data-val="62" data-pct="8.8% of Female" class="block px-3 py-1.5 hover:bg-rose-900/60 font-medium">Total Female (PWD)</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <span id="dashboard-kpi-female-pct" class="inline-flex items-center text-3xs font-bold text-pink-100 bg-white/10 px-2 py-0.5 rounded-none shrink-0">
+                            56.6% of Total
                         </span>
                     </div>
                 </div>

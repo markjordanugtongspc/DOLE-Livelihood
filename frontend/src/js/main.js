@@ -133,6 +133,94 @@ function initProponentPage() {
     });
   }
 
+  // START OF SUBCHILD: Flowbite Searchable Dropdowns Handler for Add Proponent Drawer
+  const setupSearchableDropdown = (searchId, listId, hiddenInputId, labelId, dropdownMenuId, buttonId) => {
+    const searchInput = document.getElementById(searchId);
+    const listEl = document.getElementById(listId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    const labelEl = document.getElementById(labelId);
+    const dropdownMenu = document.getElementById(dropdownMenuId);
+    const buttonEl = document.getElementById(buttonId);
+
+    if (!listEl || !hiddenInput || !labelEl) return;
+
+    // Dynamically match dropdown menu width to the button trigger width
+    const syncMenuWidth = () => {
+      if (buttonEl && dropdownMenu) {
+        const btnWidth = buttonEl.getBoundingClientRect().width;
+        if (btnWidth > 0) {
+          dropdownMenu.style.width = `${btnWidth}px`;
+          dropdownMenu.style.minWidth = `${btnWidth}px`;
+        }
+      }
+    };
+
+    if (buttonEl) {
+      buttonEl.addEventListener('click', () => {
+        syncMenuWidth();
+        // Focus search input on open
+        setTimeout(() => {
+          if (searchInput && !dropdownMenu.classList.contains('hidden')) {
+            searchInput.focus();
+          }
+        }, 50);
+      });
+      window.addEventListener('resize', syncMenuWidth);
+    }
+
+    // Filter list options on search typing
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const optionButtons = listEl.querySelectorAll('button[data-value]');
+        let matchFound = false;
+
+        optionButtons.forEach((btn) => {
+          const text = btn.textContent.toLowerCase();
+          if (text.includes(query)) {
+            btn.parentElement.style.display = '';
+            matchFound = true;
+          } else {
+            btn.parentElement.style.display = 'none';
+          }
+        });
+
+        // Allow pressing Enter or typing custom value
+        if (query && !matchFound) {
+          hiddenInput.value = e.target.value;
+          labelEl.textContent = e.target.value;
+        }
+      });
+
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (searchInput.value.trim()) {
+            hiddenInput.value = searchInput.value.trim();
+            labelEl.textContent = searchInput.value.trim();
+            if (dropdownMenu) dropdownMenu.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // Select option on button click
+    listEl.querySelectorAll('button[data-value]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const val = btn.getAttribute('data-value');
+        hiddenInput.value = val;
+        labelEl.textContent = val;
+        if (dropdownMenu) dropdownMenu.classList.add('hidden');
+      });
+    });
+  };
+
+  setupSearchableDropdown('search-beneficiary', 'beneficiary-options-list', 'proponent-beneficiary-type', 'selected-beneficiary-label', 'dropdownBeneficiaryMenu', 'dropdownBeneficiaryBtn');
+  setupSearchableDropdown('search-project-type', 'project-type-options-list', 'proponent-project-type', 'selected-project-type-label', 'dropdownProjectTypeMenu', 'dropdownProjectTypeBtn');
+  setupSearchableDropdown('search-status', 'status-options-list', 'proponent-status-text', 'selected-status-label', 'dropdownStatusMenu', 'dropdownStatusBtn');
+  setupSearchableDropdown('search-evaluator', 'evaluator-options-list', 'proponent-evaluator-name', 'selected-evaluator-label', 'dropdownEvaluatorMenu', 'dropdownEvaluatorBtn');
+  // END OF SUBCHILD: Flowbite Searchable Dropdowns Handler
+
   // Proponent Form Submission
   const proponentForm = document.getElementById('proponent-registration-form');
   if (proponentForm) {
@@ -199,7 +287,7 @@ function initLoginPage() {
 // END OF FUNCTION: initLoginPage
 
 // START OF FUNCTION: initDashboardPage
-// Purpose: Sets up expandable sidebar, ApexCharts, and dashboard actions
+// Purpose: Sets up expandable sidebar, ApexCharts, gender KPI card breakdown dropdowns, and dashboard actions
 function initDashboardPage() {
   if (document.getElementById('drawer-navigation')) {
     window.dilp.sidebar = new SidebarManager().init();
@@ -209,6 +297,43 @@ function initDashboardPage() {
   if (document.getElementById('app-drawer')) {
     window.dilp.drawer = new DrawerManager('app-drawer').init();
   }
+
+  // Handle Male and Female KPI category dropdown filters (General / SR / PWD)
+  document.querySelectorAll('[data-filter-gender]').forEach((item) => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const gender = item.getAttribute('data-filter-gender');
+      const label = item.getAttribute('data-label');
+      const val = item.getAttribute('data-val');
+      const pct = item.getAttribute('data-pct');
+
+      const titleEl = document.getElementById(`dashboard-kpi-${gender}-title`);
+      const valEl = document.getElementById(`dashboard-kpi-${gender}-val`);
+      const pctEl = document.getElementById(`dashboard-kpi-${gender}-pct`);
+      const selectedLabelEl = document.getElementById(`dashboard-kpi-${gender}-selected-label`);
+      const dropdownEl = document.getElementById(`dashboard-kpi-${gender}-dropdown`);
+
+      if (titleEl) titleEl.textContent = label;
+      if (valEl) valEl.textContent = val;
+      if (pctEl) pctEl.textContent = pct;
+      if (selectedLabelEl) selectedLabelEl.textContent = label;
+
+      // Close dropdown
+      if (dropdownEl) {
+        dropdownEl.classList.add('hidden');
+      }
+    });
+  });
+
+  // Global click to dismiss KPI dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#dashboard-kpi-male-dropdown') && !e.target.closest('#dashboard-kpi-male-filter-btn')) {
+      document.getElementById('dashboard-kpi-male-dropdown')?.classList.add('hidden');
+    }
+    if (!e.target.closest('#dashboard-kpi-female-dropdown') && !e.target.closest('#dashboard-kpi-female-filter-btn')) {
+      document.getElementById('dashboard-kpi-female-dropdown')?.classList.add('hidden');
+    }
+  });
 
   // Initialize charts after DOM layout settles
   if (document.getElementById('dashboard-charts-container') || document.getElementById('chart-proponent-trend')) {

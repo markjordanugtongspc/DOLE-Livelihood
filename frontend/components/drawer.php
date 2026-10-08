@@ -17,28 +17,34 @@ $drawerSlot = $drawerSlot ?? null;
     aria-labelledby="<?= htmlspecialchars($drawerId) ?>-label"
 >
     <!-- Drawer Header -->
-    <div class="px-5 sm:px-7 pt-5 sm:pt-6 pb-4 flex items-center justify-between border-b border-stone-200 dark:border-slate-800 shrink-0">
-        <div>
-            <h5 id="<?= htmlspecialchars($drawerId) ?>-label" class="inline-flex items-center text-lg sm:text-xl font-extrabold text-stone-900 dark:text-white">
+    <div class="px-5 sm:px-7 pt-5 sm:pt-6 pb-4 flex items-center justify-between border-b border-stone-200 dark:border-slate-800 shrink-0 gap-3">
+        <div class="min-w-0 flex-1">
+            <h5 id="<?= htmlspecialchars($drawerId) ?>-label" class="inline-flex items-center text-lg sm:text-xl font-extrabold text-stone-900 dark:text-white truncate">
                 <svg class="w-5 h-5 mr-2 text-emerald-700 dark:text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span id="<?= htmlspecialchars($drawerId) ?>-heading"><?= htmlspecialchars($drawerTitle) ?></span>
             </h5>
-            <?php if (!empty($drawerSubtitle)): ?>
-                <p id="<?= htmlspecialchars($drawerId) ?>-subtitle" class="text-xs sm:text-sm text-stone-500 dark:text-slate-400 mt-1">
-                    <?= htmlspecialchars($drawerSubtitle) ?>
-                </p>
-            <?php endif; ?>
+            <p id="<?= htmlspecialchars($drawerId) ?>-subtitle" class="text-xs sm:text-sm text-stone-500 dark:text-slate-400 mt-1 <?= empty($drawerSubtitle) ? 'hidden' : '' ?>">
+                <?= htmlspecialchars($drawerSubtitle ?? '') ?>
+            </p>
         </div>
-        <button
-            type="button"
-            data-drawer-hide="<?= htmlspecialchars($drawerId) ?>"
-            aria-controls="<?= htmlspecialchars($drawerId) ?>"
-            class="text-stone-400 hover:text-stone-700 dark:hover:text-white rounded-xl p-2 inline-flex items-center cursor-pointer transition hover:bg-stone-100 dark:hover:bg-slate-800"
-            aria-label="Close drawer"
-        >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            <span class="sr-only">Close drawer</span>
-        </button>
+
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <!-- Dynamic Actions / Navigation Slot (Prev/Next & Counter) -->
+            <div id="<?= htmlspecialchars($drawerId) ?>-header-actions" class="flex items-center gap-2"></div>
+
+            <div class="h-5 w-px bg-stone-200 dark:bg-slate-700 hidden sm:block" aria-hidden="true"></div>
+
+            <button
+                type="button"
+                data-drawer-hide="<?= htmlspecialchars($drawerId) ?>"
+                aria-controls="<?= htmlspecialchars($drawerId) ?>"
+                class="text-stone-400 hover:text-stone-700 dark:hover:text-white rounded-xl p-2 inline-flex items-center cursor-pointer transition hover:bg-stone-100 dark:hover:bg-slate-800 shrink-0"
+                aria-label="Close drawer"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <span class="sr-only">Close drawer</span>
+            </button>
+        </div>
     </div>
 
     <!-- Drawer Content Slot with Slim Scrollbar & Expanded Width -->

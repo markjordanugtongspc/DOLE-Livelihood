@@ -238,38 +238,71 @@ export class ProponentTrendChart extends BaseChart {
 }
 // END OF CLASS: ProponentTrendChart
 
-// START OF CLASS: CategoryDistributionChart — Subchild 2: Livelihood Project Categories Donut Chart
-export class CategoryDistributionChart extends BaseChart {
+// START OF CLASS: GenderDemographicsRadialChart — Subchild 2: Gender & Demographic Radial Bar Chart
+export class GenderDemographicsRadialChart extends BaseChart {
   /**
    * START OF FUNCTION: constructor
-   * Purpose: Calls parent constructor with category donut chart ID and custom options
+   * Purpose: Calls parent constructor with radial chart IDj and custom options
    */
   constructor(options = {}) {
-    super('chart-category-donut', options);
+    super('chart-gender-radial', options);
   }
   // END OF FUNCTION: constructor
 
   /**
    * START OF FUNCTION: getCardId
-   * Purpose: Returns category distribution card container ID
+   * Purpose: Returns demographics radial card container ID
    */
   getCardId() {
-    return 'dashboard-chart-category-card';
+    return 'dashboard-chart-gender-radial-card';
   }
   // END OF FUNCTION: getCardId
 
   /**
    * START OF FUNCTION: buildCardHTML
-   * Purpose: Generates HTML structure for the 1-column Project Categories Donut card
+   * Purpose: Generates modern HTML structure for the Radial Bar Demographic Breakdown card
    */
   buildCardHTML() {
     return `
       <div id="${this.getCardId()}" class="min-w-0 bg-stone-50 dark:bg-slate-800 p-6 rounded-2xl border border-stone-200 dark:border-slate-700 shadow-xs flex flex-col justify-between">
-          <div class="mb-4">
-              <h2 id="dashboard-chart-category-title" class="text-base font-bold text-stone-900 dark:text-white">Project Categories</h2>
-              <p class="text-xs text-stone-500 dark:text-slate-400">Distribution by industry sector</p>
+          <div class="mb-2">
+              <h2 id="dashboard-chart-gender-title" class="text-base font-bold text-stone-900 dark:text-white whitespace-nowrap truncate">Gender & Demographics</h2>
+              <p class="text-xs text-stone-500 dark:text-slate-400 truncate">Beneficiary profile by gender & special categories</p>
           </div>
-          <div id="${this.chartId}" class="w-full min-h-[310px]"></div>
+          
+          <div id="${this.chartId}" class="w-full flex items-center justify-center min-h-[300px]"></div>
+
+          <!-- Bottom summary breakdown legend badges -->
+          <div class="pt-3 mt-1 border-t border-stone-200 dark:border-slate-700 grid grid-cols-2 gap-2 text-xs">
+              <div class="flex items-center space-x-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0"></span>
+                  <div class="truncate">
+                      <span class="text-stone-500 dark:text-slate-400 text-3xs block">Male (All)</span>
+                      <span class="font-bold text-stone-900 dark:text-white">43.4% <span class="text-3xs text-stone-400 font-normal">(542)</span></span>
+                  </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-pink-500 shrink-0"></span>
+                  <div class="truncate">
+                      <span class="text-stone-500 dark:text-slate-400 text-3xs block">Female (All)</span>
+                      <span class="font-bold text-stone-900 dark:text-white">56.6% <span class="text-3xs text-stone-400 font-normal">(706)</span></span>
+                  </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+                  <div class="truncate">
+                      <span class="text-stone-500 dark:text-slate-400 text-3xs block">Senior Citizens (SR)</span>
+                      <span class="font-bold text-stone-900 dark:text-white">25.0% <span class="text-3xs text-stone-400 font-normal">(312)</span></span>
+                  </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 shrink-0"></span>
+                  <div class="truncate">
+                      <span class="text-stone-500 dark:text-slate-400 text-3xs block">PWD</span>
+                      <span class="font-bold text-stone-900 dark:text-white">8.7% <span class="text-3xs text-stone-400 font-normal">(108)</span></span>
+                  </div>
+              </div>
+          </div>
       </div>
     `;
   }
@@ -277,111 +310,74 @@ export class CategoryDistributionChart extends BaseChart {
 
   /**
    * START OF FUNCTION: getChartOptions
-   * Purpose: Configures ApexCharts donut series, colors, centered total labels, and legend
+   * Purpose: Configures Flowbite/ApexCharts type: "radialBar" with multi-series tracks and DOLE palette
    */
   getChartOptions() {
     return {
-      series: [44, 28, 18, 10],
-      labels: ['Agriculture / Agri-business', 'Food & Beverage', 'Retail & Trading', 'Crafts & Services'],
+      series: [56.6, 43.4, 25.0, 8.7],
+      labels: ['Female (All)', 'Male (All)', 'Seniors (SR)', 'PWD'],
       chart: {
-        width: '100%',
         height: 310,
-        type: 'donut',
+        type: 'radialBar',
         fontFamily: 'Poppins, sans-serif',
         toolbar: { show: false },
-        redrawOnParentResize: true,
-        redrawOnWindowResize: true
+        sparkline: { enabled: false }
       },
-      colors: ['#237D2C', '#F29C38', '#0284c7', '#10b981'],
-      stroke: {
-        width: 2,
-        colors: ['#ffffff']
-      },
-      legend: {
-        position: 'bottom',
-        horizontalAlign: 'center',
-        fontSize: '12px',
-        fontFamily: 'Poppins, sans-serif',
-        fontWeight: 500,
-        itemMargin: {
-          horizontal: 8,
-          vertical: 4
-        },
-        markers: {
-          width: 10,
-          height: 10,
-          radius: 12
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: (val) => `${Math.round(val)}%`,
-        style: {
-          fontSize: '11px',
-          fontFamily: 'Poppins, sans-serif',
-          fontWeight: 600
-        },
-        dropShadow: { enabled: false }
-      },
+      colors: ['#ec4899', '#2563eb', '#f59e0b', '#059669'],
       plotOptions: {
-        pie: {
-          customScale: 0.95,
-          donut: {
-            size: '68%',
-            labels: {
+        radialBar: {
+          track: {
+            background: '#e2e8f0',
+            strokeWidth: '97%',
+            margin: 5
+          },
+          dataLabels: {
+            name: {
+              fontSize: '12px',
+              fontFamily: 'Poppins, sans-serif',
+              fontWeight: 600,
+              color: '#64748b',
+              offsetY: -5
+            },
+            value: {
+              fontSize: '22px',
+              fontFamily: 'Poppins, sans-serif',
+              fontWeight: 800,
+              color: '#1e293b',
+              offsetY: 5,
+              formatter: (val) => `${val}%`
+            },
+            total: {
               show: true,
-              name: {
-                show: true,
-                fontSize: '12px',
-                fontFamily: 'Poppins, sans-serif',
-                fontWeight: 500,
-                color: '#64748b',
-                offsetY: -4
-              },
-              value: {
-                show: true,
-                fontSize: '22px',
-                fontFamily: 'Poppins, sans-serif',
-                fontWeight: 700,
-                color: '#1e293b',
-                offsetY: 4,
-                formatter: () => '100%'
-              },
-              total: {
-                show: true,
-                label: 'Total Projects',
-                fontSize: '12px',
-                fontFamily: 'Poppins, sans-serif',
-                fontWeight: 600,
-                color: '#64748b',
-                formatter: () => '100%'
-              }
+              label: 'Total Beneficiaries',
+              fontSize: '11px',
+              fontFamily: 'Poppins, sans-serif',
+              fontWeight: 600,
+              color: '#64748b',
+              formatter: () => '1,248'
             }
           }
         }
       },
-      responsive: [
-        {
-          breakpoint: 1024,
-          options: {
-            chart: { height: 290 },
-            legend: { position: 'bottom' }
-          }
-        },
-        {
-          breakpoint: 640,
-          options: {
-            chart: { height: 270 },
-            legend: { position: 'bottom' }
-          }
+      legend: {
+        show: false
+      },
+      stroke: {
+        lineCap: 'round'
+      },
+      tooltip: {
+        enabled: true,
+        theme: 'light',
+        y: {
+          formatter: (val) => `${val}% of Total`
         }
-      ],
+      },
       ...this.options
     };
   }
   // END OF FUNCTION: getChartOptions
 }
-// END OF CLASS: CategoryDistributionChart
+// END OF CLASS: GenderDemographicsRadialChart
 
 // START OF CLASS: ChartManager — Coordinator managing parent container injection and child chart instances
 export class ChartManager {
@@ -393,7 +389,7 @@ export class ChartManager {
     this.containerId = options.containerId || 'dashboard-charts-container';
     this.gridId = options.gridId || 'dashboard-charts-grid';
     this.trendChart = new ProponentTrendChart();
-    this.categoryChart = new CategoryDistributionChart();
+    this.genderRadialChart = new GenderDemographicsRadialChart();
   }
   // END OF FUNCTION: constructor
 
@@ -418,12 +414,12 @@ export class ChartManager {
     // Mount cards via subchild classes
     if (mountTarget) {
       this.trendChart.mountCard(mountTarget);
-      this.categoryChart.mountCard(mountTarget);
+      this.genderRadialChart.mountCard(mountTarget);
     }
 
     // Render both charts
     this.trendChart.render();
-    this.categoryChart.render();
+    this.genderRadialChart.render();
 
     // Trigger frame resize check to ensure SVG dimensions expand to container width
     requestAnimationFrame(() => {
@@ -440,7 +436,7 @@ export class ChartManager {
    */
   destroyAll() {
     this.trendChart.destroy();
-    this.categoryChart.destroy();
+    this.genderRadialChart.destroy();
   }
   // END OF FUNCTION: destroyAll
 }
